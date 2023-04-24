@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+ 
+}
+
+.bg-gradient{
+  /* linear-gradient(to right, #15251e, #193027, #1c3b30, #1e473a, #205344) */
+  background-color: #13201a;
+  /* background-color: #e5e5f7; */
+  background-size: 100px 100px;
+  background-image:  repeating-linear-gradient(to right, transparent, transparent 98px, #1c4b3d3e 2.6px, #1c4b3d4b);  
+  /* background-image:  repeating-linear-gradient(to right, #444cf7, #444cf7 2.6px, #e5e5f7 2.6px, #e5e5f7); */
+}
+
+.green-glass {
+  /* From https://css.glass */
+/* From https://css.glass */
+background: rgba(49, 74, 69, 0.56);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(7.6px);
+-webkit-backdrop-filter: blur(7.6px);
+border: 1px solid rgba(49, 74, 69, 0.32);
+}
+
+.white-glass{
+  background: rgba(255, 255, 255, 0.73);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(7.6px);
+-webkit-backdrop-filter: blur(7.6px);
+border: 1px solid rgba(255, 255, 255, 0.32);
+}
+.blue-glass{
+  background: rgb(68, 93, 150);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(7.6px);
+-webkit-backdrop-filter: blur(7.6px);
+border: 1px solid rgba(255, 255, 255, 0.32);
+}
+.stickyEle{
+  position: -webkit-sticky;
+  position: sticky;
+  top: 10px;
+}
