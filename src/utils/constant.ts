@@ -84,7 +84,7 @@ export const sidebarData = [
   },
 ];
 
-export const currency = {
+export const currency: any = {
   USD: "$",
   CAD: "$",
   NGN: "N",

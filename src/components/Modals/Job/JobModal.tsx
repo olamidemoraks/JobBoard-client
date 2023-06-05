@@ -36,6 +36,14 @@ import {
 } from "react-icons/io5";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import ApplyJobModal from "./ApplyJobModal";
+import moment from "moment";
+import "react-quill/dist/quill.bubble.css";
+import dynamic from "next/dynamic";
+
+const QuillNoSSRWrapper = dynamic(import("react-quill"), {
+  ssr: false,
+  loading: () => <Loader />,
+});
 
 type JobModalProps = {
   open: boolean;
@@ -63,7 +71,7 @@ const JobModal: React.FC<JobModalProps> = ({
   //get if already applied
   const { data: userApplication } = useQuery("application", getUserAppication, {
     onSuccess: (data) => {
-      if (data.isError === true) {
+      if (data?.isError === true) {
         queryClient.setQueriesData("application", emptyResponse);
       }
     },
@@ -257,14 +265,28 @@ const JobModal: React.FC<JobModalProps> = ({
                   {Job?.Applicants} applicants
                 </p>
                 <p className="text-gray-600 text-sm font-normal">
-                  {currency[Job?.currency ?? "USD"]}
+                  {currency[Job?.currency ?? "USD"] === "N" ? (
+                    <span>&#8358;</span>
+                  ) : (
+                    currency[Job?.currency ?? "USD"]
+                  )}
                   {Job?.PayMin?.toLocaleString()} -{" "}
-                  {currency[Job?.currency ?? "USD"]}
+                  {currency[Job?.currency ?? "USD"] === "N" ? (
+                    <span>&#8358;</span>
+                  ) : (
+                    currency[Job?.currency ?? "USD"]
+                  )}
                   {Job?.PayMax?.toLocaleString()}{" "}
                   <span className=" text-sm">
                     {frequently[Job?.frequency ?? "yr"]}
                   </span>
                 </p>
+                {moment(Job?.Deadline).toISOString() <
+                  moment().toISOString() && (
+                  <p className="bg-red-600 text-white px-1 py-[2px] text-xs text-center rounded-md font-light">
+                    Expired ${moment(Job?.Deadline).fromNow()}
+                  </p>
+                )}
               </div>
             </div>
             <div className="md:block hidden">
@@ -293,35 +315,12 @@ const JobModal: React.FC<JobModalProps> = ({
           <div className="flex gap-4 my-9 md:flex-row flex-col px-7">
             <div className="flex-1 flex flex-col ">
               <p className=" font-black">Job Description</p>
-              <div className="">
-                {/* job description */}
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Accusamus cumque aspernatur fugiat quam. Atque cum repudiandae
-                doloremque fuga vel eaque nobis. Similique consectetur hic
-                cumque, et optio modi omnis laboriosam earum sed? Voluptatem,
-                eius tempora. Beatae illum temporibus, porro optio minus ex
-                expedita, aut cupiditate quo saepe doloremque, natus adipisci
-                sapiente provident sit commodi est perspiciatis dolorum eius
-                molestias deserunt voluptatum cumque molestiae. Eos, temporibus
-                doloribus nisi hic voluptates ratione repellat recusandae. Culpa
-                commodi vel, nihil incidunt a itaque cupiditate officiis
-                doloribus optio, harum asperiores magnam adipisci esse alias
-                corporis molestias illo minus quisquam enim, unde sit! Quos
-                repellendus quasi omnis eos dolorum minus ratione veritatis
-                molestias quisquam. Dolore asperiores placeat quae ut facere,
-                eum rem suscipit beatae magni voluptate dolorem ullam
-                voluptatibus a voluptatem ipsam eligendi. Velit perspiciatis
-                pariatur laboriosam expedita consequuntur vero praesentium
-                perferendis obcaecati provident modi voluptatum accusantium
-                maiores voluptas, quidem amet iure placeat explicabo tempore
-                soluta fugiat! Nihil accusamus ducimus totam distinctio animi
-                voluptatum nulla commodi incidunt amet, enim corporis saepe
-                possimus nemo consectetur sunt, exercitationem quae! Id ducimus
-                earum, itaque ipsum fuga voluptas quisquam cupiditate magnam,
-                quam voluptate voluptatem minus laboriosam inventore asperiores
-                ipsam officiis facilis exercitationem tenetur quae quasi
-                deleniti, tempora fugit architecto vitae.
-              </div>
+              <QuillNoSSRWrapper
+                value={Job?.Description}
+                readOnly={true}
+                theme={"bubble"}
+                className="min-h-[60vh] flex-1 mb-4"
+              />
             </div>
             <div className="flex-[0.3] border border-gray-200 rounded-[7px]  p-3 gap-4 flex-col md:flex hidden">
               <div className="flex flex-col gap-2">

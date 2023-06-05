@@ -1,6 +1,14 @@
+import Loader from "@/components/Utils/Loader";
 import { Job } from "@/type/types";
+import dynamic from "next/dynamic";
 import React, { useState } from "react";
 import { HiChevronDown, HiChevronUp } from "react-icons/hi";
+import "react-quill/dist/quill.bubble.css";
+
+const QuillNoSSRWrapper = dynamic(import("react-quill"), {
+  ssr: false,
+  loading: () => <Loader />,
+});
 
 type JobDetailsProps = {
   Job: Job | undefined;
@@ -12,34 +20,12 @@ const JobDetails: React.FC<JobDetailsProps> = ({ Job }) => {
   return (
     <div className="flex gap-4 my-4 md:flex-row flex-col px-7">
       <div className="flex-1 flex flex-col ">
-        <p className=" font-black">Job Description</p>
-        <div className="">
-          {/* job description */}
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus
-          cumque aspernatur fugiat quam. Atque cum repudiandae doloremque fuga
-          vel eaque nobis. Similique consectetur hic cumque, et optio modi omnis
-          laboriosam earum sed? Voluptatem, eius tempora. Beatae illum
-          temporibus, porro optio minus ex expedita, aut cupiditate quo saepe
-          doloremque, natus adipisci sapiente provident sit commodi est
-          perspiciatis dolorum eius molestias deserunt voluptatum cumque
-          molestiae. Eos, temporibus doloribus nisi hic voluptates ratione
-          repellat recusandae. Culpa commodi vel, nihil incidunt a itaque
-          cupiditate officiis doloribus optio, harum asperiores magnam adipisci
-          esse alias corporis molestias illo minus quisquam enim, unde sit! Quos
-          repellendus quasi omnis eos dolorum minus ratione veritatis molestias
-          quisquam. Dolore asperiores placeat quae ut facere, eum rem suscipit
-          beatae magni voluptate dolorem ullam voluptatibus a voluptatem ipsam
-          eligendi. Velit perspiciatis pariatur laboriosam expedita consequuntur
-          vero praesentium perferendis obcaecati provident modi voluptatum
-          accusantium maiores voluptas, quidem amet iure placeat explicabo
-          tempore soluta fugiat! Nihil accusamus ducimus totam distinctio animi
-          voluptatum nulla commodi incidunt amet, enim corporis saepe possimus
-          nemo consectetur sunt, exercitationem quae! Id ducimus earum, itaque
-          ipsum fuga voluptas quisquam cupiditate magnam, quam voluptate
-          voluptatem minus laboriosam inventore asperiores ipsam officiis
-          facilis exercitationem tenetur quae quasi deleniti, tempora fugit
-          architecto vitae.
-        </div>
+        <QuillNoSSRWrapper
+          value={Job?.Description}
+          readOnly={true}
+          theme={"bubble"}
+          className="min-h-[60vh] flex-1 mb-4"
+        />
       </div>
       <div className="flex-[0.5] border border-gray-200 rounded-[7px]  p-3 gap-4 flex-col md:flex hidden">
         <div className="flex flex-col gap-2">

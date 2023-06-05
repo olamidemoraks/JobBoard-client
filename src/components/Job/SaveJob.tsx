@@ -7,6 +7,8 @@ import CompanyModals from "../Modals/Job/CompanyModals";
 import JobModal from "../Modals/Job/JobModal";
 import Loader from "../Utils/Loader";
 import JobCard from "./JobCard";
+import { Job } from "@/type/types";
+import Empty from "../Utils/Empty";
 type SaveJobProps = {};
 
 const SaveJob: React.FC<SaveJobProps> = () => {
@@ -17,9 +19,9 @@ const SaveJob: React.FC<SaveJobProps> = () => {
     isLoading,
     error,
     isError,
-  } = useQuery("saved", getSavedJobs, {
+  } = useQuery<Job[] | any>("saved", getSavedJobs, {
     onSuccess: (data) => {
-      if (data.isError === true) {
+      if (data?.isError === true) {
         queryClient.setQueriesData("saved", emptyResponse);
       }
     },
@@ -73,6 +75,30 @@ const SaveJob: React.FC<SaveJobProps> = () => {
   }
   console.log("Job", isError);
 
+  let content;
+  if (Jobs.length !== 0) {
+    content = Jobs.map((job: any) => {
+      // const isSaved = !!Jobs?.find((saveJob: any) => saveJob._id === job._id);
+      const { isSaved, handleSaveOrUnsaveJob } = useSaved({
+        jobId: job._id,
+        savedJobs: Jobs,
+        mutation: mutation,
+      });
+      return (
+        <JobCard
+          key={job._id}
+          Job={job}
+          handleCompanyModel={handleCompanyModel}
+          handleJobModel={handleJobModel}
+          handleSaveOrUnsaveJob={handleSaveOrUnsaveJob}
+          isSaved={isSaved}
+        />
+      );
+    });
+  } else {
+    content = <Empty />;
+  }
+
   return (
     <div className="flex flex-col gap-5">
       <CompanyModals
@@ -89,24 +115,7 @@ const SaveJob: React.FC<SaveJobProps> = () => {
         companyId={companyId}
       />
 
-      {Jobs.map((job: any) => {
-        // const isSaved = !!Jobs?.find((saveJob: any) => saveJob._id === job._id);
-        const { isSaved, handleSaveOrUnsaveJob } = useSaved({
-          jobId: job._id,
-          savedJobs: Jobs,
-          mutation: mutation,
-        });
-        return (
-          <JobCard
-            key={job._id}
-            Job={job}
-            handleCompanyModel={handleCompanyModel}
-            handleJobModel={handleJobModel}
-            handleSaveOrUnsaveJob={handleSaveOrUnsaveJob}
-            isSaved={isSaved}
-          />
-        );
-      })}
+      {content}
     </div>
   );
 };

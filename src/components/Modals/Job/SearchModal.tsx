@@ -358,15 +358,15 @@ const SearchModal: React.FC<SearchModalProps> = ({
                 </div>
                 <div className="flex items-center justify-between">
                   <p>Ruby on Rails</p>{" "}
-                  {skills.includes("ruby on rails") ? (
+                  {skills.includes("ruby_on_rails") ? (
                     <HiX
                       className=" text-blue-500 cursor-pointer text-[18px]"
-                      onClick={() => handleSkills("ruby on rails")}
+                      onClick={() => handleSkills("ruby_on_rails")}
                     />
                   ) : (
                     <IoAdd
                       className=" text-blue-500 cursor-pointer text-[18px]"
-                      onClick={() => handleSkills("ruby on rails")}
+                      onClick={() => handleSkills("ruby_on_rails")}
                     />
                   )}
                 </div>

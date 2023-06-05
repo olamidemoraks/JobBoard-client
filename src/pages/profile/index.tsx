@@ -4,6 +4,7 @@ import AddProfile from "@/components/NoProfileBackup/AddProfile";
 import ProfileLoading from "@/components/Utils/ProfileLoading";
 import UploadButton from "@/components/Utils/UploadButton";
 import { useUploadImageMutation } from "@/feature/profile/profileApiSlice";
+import useCountry from "@/hooks/useCountry";
 import { Profile } from "@/type/types";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
@@ -26,11 +27,12 @@ type ProfileProps = {};
 const Profile: React.FC<ProfileProps> = () => {
   const [uploadProfile, { isLoading: uploadLoading }] =
     useUploadImageMutation();
+  const { getByValue } = useCountry();
   const emptyResponse: any = [];
   const queryClient = useQueryClient();
   const { data, isLoading } = useQuery<Profile>("profile", getProfile, {
     onSuccess: (data: any) => {
-      if (data.isError === true) {
+      if (data?.isError === true) {
         queryClient.setQueriesData("profile", emptyResponse);
       }
     },
@@ -63,11 +65,14 @@ const Profile: React.FC<ProfileProps> = () => {
     }
   };
 
+  console.log(data);
+
   useEffect(() => {
     if (uploadLoading === false) {
       queryClient.invalidateQueries("profile");
     }
   }, [uploadLoading]);
+
   if (isLoading) {
     return (
       <div className="relative pt-[5rem] flex justify-center mx-6 w-full">
@@ -76,7 +81,7 @@ const Profile: React.FC<ProfileProps> = () => {
     );
   }
 
-  if (data === null || data === undefined) {
+  if (data === null || data === undefined || !data) {
     return <AddProfile />;
   }
   return (
@@ -89,7 +94,7 @@ const Profile: React.FC<ProfileProps> = () => {
               <>
                 <img
                   className=" h-full w-full object-cover"
-                  src={`http://localhost:5000/profile/${data.Photo}`}
+                  src={`${process.env.NEXT_PUBLIC_BASEURL}/profile/${data.Photo}`}
                   alt="profile"
                 />
                 <div
@@ -159,7 +164,7 @@ const Profile: React.FC<ProfileProps> = () => {
                 <HiLocationMarker className=" text-gray-400" />
                 <p className="text-[13px] text-gray-400">
                   {data?.Country ? (
-                    data.Country
+                    getByValue(data?.Country)?.label
                   ) : (
                     <Link href={"/profile/contact"}>Add your location</Link>
                   )}
@@ -168,7 +173,9 @@ const Profile: React.FC<ProfileProps> = () => {
               <div className="flex gap-1">
                 <GiGraduateCap className=" text-gray-400" />
                 <p className="text-[13px] text-gray-400">
-                  {data?.Education[0]?.CollegeName ?? (
+                  {data?.Education ? (
+                    data?.Education[0]?.CollegeName
+                  ) : (
                     <Link href={"/profile/update"}>Add your education</Link>
                   )}
                 </p>
@@ -201,7 +208,7 @@ const Profile: React.FC<ProfileProps> = () => {
             </Link>
           </div>
 
-          {data.Work.length <= 0 ? (
+          {!data?.Work ? (
             <div className="p-3 rounded-sm w-full mt-3 border border-gray-200 text-center text-sm hover:animate-pulse">
               <Link href={"/profile/update"}>
                 Please add the companies you've started, worked at, advised,
@@ -233,7 +240,7 @@ const Profile: React.FC<ProfileProps> = () => {
             </Link>
           </div>
 
-          {data.Work.length <= 0 ? (
+          {!data.Education ? (
             <div className="p-3 rounded-sm w-full mt-3 border border-gray-200 text-center text-sm hover:animate-pulse">
               <Link href={"/profile/update"}>
                 Please add the college or programs you've started, attended,
@@ -244,15 +251,15 @@ const Profile: React.FC<ProfileProps> = () => {
             <div className="py-8 px-16 border border-gray-200 rounded-sm mt-2 flex items-start gap-4">
               <GiGraduateCap className="text-[34px] text-gray-300" />
               <div className=" flex flex-col gap-2">
-                {data.Education.map((education) => (
+                {data?.Education.map((education) => (
                   <div className="flex flex-col gap-1">
                     <p className="text-[13px] font-light">
-                      {education.CollegeName}, {education.City_State}.{" "}
-                      {education.EducationPeriod}
+                      {education?.CollegeName}, {education?.City_State}.{" "}
+                      {education?.EducationPeriod}
                     </p>
                     <p className="text-[14px] ">
-                      {education.Level}
-                      {education.Field}
+                      {education?.Level}
+                      {education?.Field}
                     </p>
                   </div>
                 ))}
@@ -273,7 +280,7 @@ const Profile: React.FC<ProfileProps> = () => {
             <div className="flex gap-6">
               <p className=" text-[15px] text-gray-400">Skills</p>
               <div className="flex ">
-                {data.Skills.map((skill) => (
+                {data?.Skills?.map((skill) => (
                   <p className="text-[14px]">{skill},</p>
                 ))}
               </div>
@@ -281,7 +288,7 @@ const Profile: React.FC<ProfileProps> = () => {
             <div className="flex gap-6">
               <p className=" text-[15px] text-gray-400">Location</p>
               <p className="text-[14px]">
-                {`${data.Country},`} {data.City_State}
+                {getByValue(data.Country)?.label} ,{data.City_State}
               </p>
             </div>
           </div>

@@ -1,9 +1,11 @@
 import { Profile } from "@/type/types";
 import { month, year } from "@/utils/constant";
 import { Formik } from "formik";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import Input from "../../Utils/Input";
 import { UseMutationResult } from "react-query";
+import useCountry from "@/hooks/useCountry";
+import { MomoizedCountryMenu } from "@/components/Utils/CountryMenu";
 
 type WorkExperienceProps = {
   resume?: Profile;
@@ -24,6 +26,15 @@ const WorkExperience: React.FC<WorkExperienceProps> = ({
   isEditing = false,
   mutation,
 }) => {
+  const { getByValue } = useCountry();
+  const [country, setCountry] = useState(resume?.Country ?? "");
+  const setCountryOption = useCallback(
+    (value: string) => {
+      setCountry(value);
+    },
+    [country]
+  );
+
   const initialWork = resume?.Work?.find((work, idx) => {
     if (index) {
       if (Number(index) === idx) {
@@ -161,11 +172,14 @@ const WorkExperience: React.FC<WorkExperienceProps> = ({
               id="Company"
               label="Company"
             />
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 w-full">
               <p>
-                City - Nigeria (
-                <span className=" text-blue-600 hover:underline cursor-pointer">
-                  Change
+                Country - {getByValue(country)?.label ?? "Select Country"} (
+                <span className=" hover:underline cursor-pointer">
+                  <MomoizedCountryMenu
+                    setCountryOption={setCountryOption}
+                    text="Change"
+                  />
                 </span>
                 )
               </p>

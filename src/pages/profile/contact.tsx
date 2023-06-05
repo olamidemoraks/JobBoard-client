@@ -1,12 +1,19 @@
 import { getProfile, updateProfile } from "@/app/apiQuery";
+import { MomoizedCountryMenu } from "@/components/Utils/CountryMenu";
 import Input from "@/components/Utils/Input";
 import Loader from "@/components/Utils/Loader";
+import useCountry from "@/hooks/useCountry";
 import useProfile from "@/hooks/useProfile";
 import { Profile } from "@/type/types";
 import { Formik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
 import { BsArrowLeft } from "react-icons/bs";
 import {
   dehydrate,
@@ -34,7 +41,6 @@ let initialData = {
   Mobileno: "",
   Relocate: true,
   PCode: "",
-  Country: "",
   JobTitle: "",
   Address: "",
   Gender: "",
@@ -42,6 +48,7 @@ let initialData = {
 };
 
 const contact: React.FC<contactProps> = () => {
+  const { getByValue } = useCountry();
   const router = useRouter();
   const queryClient = useQueryClient();
   const { email } = useProfile();
@@ -49,6 +56,13 @@ const contact: React.FC<contactProps> = () => {
     "profile",
     getProfile,
     {}
+  );
+  const [country, setCountry] = useState(resume?.Country ?? "");
+  const setCountryOption = useCallback(
+    (value: string) => {
+      setCountry(value);
+    },
+    [country]
   );
 
   const mutation = useMutation(updateProfile, {
@@ -72,7 +86,6 @@ const contact: React.FC<contactProps> = () => {
       initialData.Mobileno = resume?.Mobileno ?? "";
       initialData.Relocate = resume?.Relocate ?? true;
       initialData.PCode = resume?.PCode ?? "";
-      initialData.Country = resume?.Country ?? "";
       initialData.Address = resume?.Address ?? "";
       initialData.JobTitle = resume?.JobTitle ?? "";
       initialData.DOB = resume?.DOB ?? "";
@@ -97,7 +110,7 @@ const contact: React.FC<contactProps> = () => {
   };
 
   const handleSave = (values: any) => {
-    mutation?.mutate({ data: values });
+    mutation?.mutate({ data: { ...values, Country: country } });
   };
   if (isLoading) {
     return (
@@ -258,8 +271,8 @@ const contact: React.FC<contactProps> = () => {
               </div>
               <label className="font-semibold mt-2">Country</label>
               <div className="flex items-center justify-between w-full">
-                <p>Nigeria</p>
-                <p className=" text-blue-600 cursor-pointer">change</p>
+                <p>{getByValue(country)?.label ?? "Select Country"}</p>
+                <MomoizedCountryMenu setCountryOption={setCountryOption} />
               </div>
               <Input
                 value={values.Address}

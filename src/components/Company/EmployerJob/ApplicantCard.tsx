@@ -26,7 +26,7 @@ const ApplicantCard: React.FC<ApplicantCardProps> = ({ applicant }) => {
             <div className=" h-10 w-10 rounded-full">
               <img
                 className=" h-full w-full object-cover rounded-full"
-                src={`http://localhost:5000/profile/${applicant?.profile?.Photo}`}
+                src={`${process.env.NEXT_PUBLIC_BASEURL}/profile/${applicant?.profile?.Photo}`}
                 alt=""
               />
             </div>

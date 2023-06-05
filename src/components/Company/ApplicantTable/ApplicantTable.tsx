@@ -95,7 +95,7 @@ const ApplicantTable: React.FC<ApplicantTableProps> = ({
             <div className="h-8 w-8 rounded-full ">
               {!params.row.Photo ? (
                 <img
-                  src={`http://localhost:5000/profile/${params.row.Photo}`}
+                  src={`${process.env.NEXT_PUBLIC_BASEURL}/profile/${params.row.Photo}`}
                   alt="photo"
                   className="h-full w-full rounded-full object-cover"
                 />

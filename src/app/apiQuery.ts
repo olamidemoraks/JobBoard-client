@@ -1,11 +1,19 @@
-import { Profile } from "@/type/types";
+const baseUrl = `${process.env.NEXT_PUBLIC_BASEURL}/api/v1`;
+let token: string = "";
 
-const baseUrl = "http://localhost:5000/api/v1";
+if (typeof window !== "undefined") {
+  const info = JSON.parse(localStorage.getItem("_profile") as string);
+  token = info.token;
+}
+
 export const getProfile = async (): Promise<any> => {
   try {
     const data = await fetch(`${baseUrl}/seeker`, {
       method: "GET",
       credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return data.json();
   } catch (error) {
@@ -22,6 +30,7 @@ export const updateProfile = async ({ data }: any) => {
       }),
       credentials: "include",
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-type": "application/json; charset=UTF-8",
       },
     });
@@ -36,6 +45,9 @@ export const getCompany = async (): Promise<any> => {
     const res = await fetch(`${baseUrl}/company`, {
       method: "GET",
       credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return res.json();
   } catch (error) {
@@ -52,6 +64,7 @@ export const updateCompany = async ({ data, id }: any) => {
         ...data,
       }),
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-type": "application/json; charset=UTF-8",
       },
     });
@@ -64,6 +77,9 @@ export const getJobs = async (id: any) => {
     const res = await fetch(`${baseUrl}/company/jobs/${id}`, {
       method: "GET",
       credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return res.json();
   } catch (error) {
@@ -75,6 +91,9 @@ export const getJob = async (id: any) => {
     const res = await fetch(`${baseUrl}/company/jobs/getjob/${id}`, {
       method: "GET",
       credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return res.json();
   } catch (error) {
@@ -90,6 +109,7 @@ export const updateJob = async ({ values, id }: any) => {
         ...values,
       }),
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-type": "application/json; charset=UTF-8",
       },
     });
@@ -104,6 +124,9 @@ export const deleteJob = async ({ id }: any) => {
     const res = await fetch(`${baseUrl}/company/jobs/${id}`, {
       method: "DELETE",
       credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return res.json();
   } catch (error) {
@@ -167,6 +190,9 @@ export const getSavedJobs = async () => {
     const res = await fetch(`${baseUrl}/saved`, {
       method: "GET",
       credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return res.json();
   } catch (error) {
@@ -179,6 +205,9 @@ export const removeSavedJobs = async ({ id }: any) => {
     const res = await fetch(`${baseUrl}/saved/${id}`, {
       method: "DELETE",
       credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return res.json();
   } catch (error) {
@@ -195,6 +224,7 @@ export const createSavedJobs = async ({ data }: any) => {
         ...data,
       }),
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-type": "application/json; charset=UTF-8",
       },
     });
@@ -223,6 +253,9 @@ export const getUserAppication = async () => {
     const res = await fetch(`${baseUrl}/job/apply/user-application`, {
       method: "GET",
       credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return res.json();
   } catch (error) {
@@ -235,6 +268,9 @@ export const getAllJobApplicant = async (JId: any, CId: any) => {
     const res = await fetch(`${baseUrl}/company/applicant/${JId}/${CId}`, {
       method: "GET",
       credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return res.json();
   } catch (error) {
@@ -247,6 +283,9 @@ export const getAllCompanyApplicant = async (CId: any) => {
     const res = await fetch(`${baseUrl}/company/application/${CId}`, {
       method: "GET",
       credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return res.json();
   } catch (error) {
@@ -259,6 +298,9 @@ export const getApplicant = async (Id: any) => {
     const res = await fetch(`${baseUrl}/company/getApplicant/${Id}`, {
       method: "GET",
       credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return res.json();
   } catch (error) {
@@ -275,6 +317,7 @@ export const updateApplicantStatus = async ({ value, id }: any) => {
         Status: value,
       }),
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-type": "application/json; charset=UTF-8",
       },
     });
@@ -290,6 +333,9 @@ export const getOverview = async (id: string) => {
     const res = await fetch(`${baseUrl}/overview/${id}`, {
       method: "GET",
       credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return res.json();
   } catch (error) {

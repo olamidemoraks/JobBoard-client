@@ -140,8 +140,8 @@ const JobDetail: React.FC<JobDetailProps> = () => {
             href={`/employee/job/edit/${router.query.id}`}
             className="bg-gray-300/30 hover:bg-gray-300/70 rounded-full px-2 py-[3px] flex items-center gap-1 "
           >
-            <p className="text-green-500">Edit</p>{" "}
-            <HiPencil className="text-green-500" />
+            <p className="text-neutral-500">Edit</p>{" "}
+            <HiPencil className="text-neutral-500" />
           </Link>
 
           <div className="h-[24px] w-[1px] bg-gray-300" />
@@ -151,7 +151,9 @@ const JobDetail: React.FC<JobDetailProps> = () => {
             onClick={handleStatus}
           >
             <p
-              className={`${job?.isActive ? "text-green-500" : "text-red-500"}`}
+              className={`${
+                job?.isActive ? "text-green-600" : "text-neutral-500"
+              }`}
             >
               {job?.isActive ? "Active" : "InActive"}
             </p>

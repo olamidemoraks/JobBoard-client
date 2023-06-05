@@ -22,8 +22,8 @@ const Dashboard: React.FC<DashboardProps> = ({ overviews }) => {
         <p className=" font-semibold text-[18px] capitalize">
           Welcome back, {email?.split("@")[0]}
         </p>
-        <p className=" text-gray-500 ">
-          Here is your job listing statistic reports
+        <p className=" text-gray-500 text-sm mt-2 ">
+          Here are your job listing statistic reports
         </p>
       </div>
       <div className=" flex gap-10 w-full mt-6 md:flex-row flex-col ">
@@ -42,15 +42,11 @@ const Dashboard: React.FC<DashboardProps> = ({ overviews }) => {
           >
             <BsFillBriefcaseFill className=" text-white h-1/2 w-1/2 " />
           </ActivityDisplay>
-          <ActivityDisplay
-            name="New Messages"
-            value={20}
-            bgColor="bg-green-600"
-          >
+          <ActivityDisplay name="New Messages" value={0} bgColor="bg-green-600">
             <BsMailbox2 className=" text-white h-1/2 w-1/2 " />
           </ActivityDisplay>
         </div>
-        <div className="lg:w-[20%] md:w-[30%] flex flex-col justify-evenly gap-5 mb-5">
+        <div className=" flex flex-col justify-evenly gap-5 mb-5">
           <JobPosted jobs={overviews?.firstFiveJob} />
           <RecentApplicant applicant={overviews?.applicantWithProfile} />
         </div>

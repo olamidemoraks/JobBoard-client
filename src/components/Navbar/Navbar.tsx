@@ -4,6 +4,7 @@ import RightContent from "./RightContent/RightContent";
 import useProfile from "@/hooks/useProfile";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Logo from "../Utils/Logo";
 
 type NavbarProps = {};
 
@@ -30,7 +31,9 @@ const Navbar: React.FC<NavbarProps> = () => {
                 location === "/" ? "text-white" : "text-gray-700"
               } mr-5 `}
             >
-              WiHire
+              <Link href={"/"}>
+                <Logo />
+              </Link>
             </p>
           </Stack>
           <Flex>

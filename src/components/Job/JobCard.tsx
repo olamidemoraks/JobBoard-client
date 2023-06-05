@@ -44,7 +44,7 @@ const JobCard: React.FC<JobCardProps> = ({
             <div className=" h-12 w-12 rounded-md">
               <img
                 className=" h-full w-full object-cover rounded-md"
-                src={`http://localhost:5000/company/${Job.Logo}`}
+                src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${Job.Logo}`}
                 alt=""
               />
             </div>
@@ -99,8 +99,17 @@ const JobCard: React.FC<JobCardProps> = ({
             <div className="flex gap-[2px] md:flex-row flex-col md:items-center capitalize">
               <p className="text-black/80 text-[13px] font-semibold">
                 <span>{frequently[Job?.frequency]}: </span>
-                {currency[Job?.currency]}
-                {Job.PayMin.toLocaleString()}-{currency[Job?.currency]}
+                {currency[Job?.currency] === "N" ? (
+                  <span>&#8358;</span>
+                ) : (
+                  currency[Job?.currency]
+                )}
+                {Job.PayMin.toLocaleString()}-
+                {currency[Job?.currency] === "N" ? (
+                  <span>&#8358;</span>
+                ) : (
+                  currency[Job?.currency]
+                )}
                 {Job.PayMax.toLocaleString()}
               </p>
 

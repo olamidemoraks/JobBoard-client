@@ -59,7 +59,7 @@ const Applicant: React.FC<ApplicantProps> = () => {
 
   const download = (name: string) => {
     axios({
-      url: `http://localhost:5000/api/v1/resume/${name}`,
+      url: `${process.env.NEXT_PUBLIC_BASEURL}/api/v1/resume/${name}`,
       method: "Get",
       responseType: "blob",
     })
@@ -77,14 +77,14 @@ const Applicant: React.FC<ApplicantProps> = () => {
     );
   }
   return (
-    <div className=" bg-gray-100">
+    <div className=" ">
       <div className="flex justify-between items-center">
-        <p className="flex items-center gap-2 text-sm">
+        <p className="flex items-center gap-2 text-sm cursor-pointer">
           <HiChevronLeft className="text-[18px]" /> Back to {job?.Title}
         </p>
-        <p className="flex items-center gap-2 text-sm text-gray-400 hover:text-black">
+        {/* <p className="flex items-center gap-2 text-sm text-gray-400 hover:text-black">
           Next <HiChevronRight className="text-[18px]" />
-        </p>
+        </p> */}
       </div>
       <Toaster position="top-center" />
       <div className="flex md:flex-row flex-col mt-8 gap-5">

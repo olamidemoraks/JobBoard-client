@@ -34,7 +34,7 @@ const Jobs: React.FC<JobsProps> = () => {
 
   const { data: savedJobs } = useQuery("saved", getSavedJobs, {
     onSuccess: (data) => {
-      if (data.isError === true) {
+      if (data?.isError === true) {
         queryClient.setQueriesData("saved", emptyResponse);
       }
     },

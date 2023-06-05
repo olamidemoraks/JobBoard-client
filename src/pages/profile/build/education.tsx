@@ -124,10 +124,7 @@ const education: React.FC<educationProps> = () => {
               placeholder=""
               type="text"
             />
-            <label className="font-semibold mt-2" htmlFor="phone">
-              Country
-            </label>
-            <p>Nigeria</p>
+
             <Input
               value={values.City_State}
               name="City_State"

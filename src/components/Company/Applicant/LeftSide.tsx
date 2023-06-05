@@ -29,14 +29,14 @@ const LeftSide: React.FC<LeftSideProps> = ({
   const profile = applicant?.profile;
   const [openContact, setOpenContact] = useState(false);
   return (
-    <div className="border border-gray-200">
+    <div className="border border-gray-200 mb-4">
       <div className=" shadow-md rounded-md ">
         <div className="flex items-center flex-row gap-4 p-7 md:flex-col">
           <div className="md:h-[100px] md:w-[100px] h-[100px] w-[100px] rounded-full flex items-center justify-center bg-gray-400">
             {profile?.Photo ? (
               <img
-                className=" h-full w-full object-contain rounded-full"
-                src={`http://localhost:5000/profile/${applicant?.profile.Photo}`}
+                className=" h-full w-full object-cover rounded-full"
+                src={`${process.env.NEXT_PUBLIC_BASEURL}/profile/${applicant?.profile.Photo}`}
                 alt="profile image"
               />
             ) : (
@@ -52,7 +52,8 @@ const LeftSide: React.FC<LeftSideProps> = ({
                 Applied {moment(applicant?.createdAt).fromNow()}
               </p>
             </div>
-            <div className="flex gap-3">
+            {/* //Activities */}
+            {/* <div className="flex gap-3">
               <div className=" bg-gray-200 rounded-full h-7 w-7 text-gray-500 flex items-center justify-center p-1">
                 <AiOutlineMail />
               </div>
@@ -62,14 +63,14 @@ const LeftSide: React.FC<LeftSideProps> = ({
               <div className=" bg-gray-200 rounded-full h-7 w-7 text-gray-500 flex items-center justify-center p-1">
                 <BiPhone />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <Divider />
         <div className="flex flex-col gap-6 p-7  ">
           <div className="md:block hidden w-full">
             <p className=" capitalize  text-gray-500 mb-2">Applied job</p>
-            <div className="bg-gray-100 py-3 rounded-md ">
+            <div className="bg-gray-100 py-3 px-2 rounded-md ">
               <p className=" font-black capitalize  w-full">{job?.Title}</p>
               <div className="flex items-center gap-1 text-sm capitalize">
                 <p>{job?.EmploymentType}</p>

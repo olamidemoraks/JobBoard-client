@@ -44,22 +44,23 @@ const RecentApplicant: React.FC<RecentApplicantProps> = ({
   return (
     <div className="mt-5">
       <div className="flex items-center justify-between w-full">
-        <p className="font-black">New Applicants</p>{" "}
-        <Link href={""} className="text-xs underline">
+        <p className="text-neutral-600">New Applicants</p>{" "}
+        <Link href={"/employee/candidates"} className="text-xs underline">
           See all
         </Link>
       </div>
-      <div className="flex flex-col gap-4 mt-5 ">
-        {applicants?.map((applicant) => (
+      <div className="flex flex-col gap-2 mt-5 ">
+        {applicants?.map((applicant, idx) => (
           <Link
+            key={idx}
             href={`employee/job/applicant/${applicant?._id}`}
-            className="flex justify-between cursor-pointer"
+            className="flex justify-between cursor-pointer hover:bg-neutral-200 px-2 py-2 rounded-md"
           >
             <div className="flex gap-2 items-center">
               {!applicant?.profile?.Photo ? (
                 <div className="h-10 w-10 rounded-full bg-indigo-300 flex items-center justify-center">
                   <img
-                    src={`http://localhost:5000/profile/${applicant?.profile?.Photo}`}
+                    src={`${process.env.NEXT_PUBLIC_BASEURL}/profile/${applicant?.profile?.Photo}`}
                     alt="profile"
                     className=" w-full h-full object-cover rounded-full"
                   />
@@ -71,7 +72,7 @@ const RecentApplicant: React.FC<RecentApplicantProps> = ({
                 <p className=" text-sm capitalize">
                   {applicant?.profile?.FName} {applicant?.profile?.LName}
                 </p>
-                <p className=" text-xs font-extralight text-gray-400">
+                <p className=" text-xs font-extralight text-neutral-500">
                   Applied for:{" "}
                   <span className=" text-xs text-black">
                     {applicant?.Title}
@@ -79,7 +80,7 @@ const RecentApplicant: React.FC<RecentApplicantProps> = ({
                 </p>
               </div>
             </div>
-            <p className=" text-xs text-gray-400">
+            <p className=" text-[.6rem] text-neutral-500 flex w-fit">
               {moment(applicant.createdAt).fromNow(true)}
             </p>
           </Link>

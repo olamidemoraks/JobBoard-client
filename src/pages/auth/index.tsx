@@ -15,6 +15,7 @@ import {
 import { useAppDispatch } from "@/app/hooks";
 import { useRouter } from "next/router";
 import useProfile from "@/hooks/useProfile";
+import Logo from "@/components/Utils/Logo";
 
 const signupScheme = yup.object().shape({
   Email: yup
@@ -67,7 +68,7 @@ const Auth: React.FC = () => {
       toast.error(error?.data?.msg);
     }
   };
-  const handleSigup = async (values: any, formProps: any) => {
+  const handleSignup = async (values: any, formProps: any) => {
     try {
       const data = await signup(values).unwrap();
       dispatch(
@@ -75,7 +76,11 @@ const Auth: React.FC = () => {
           profile: { token: data.token, account: values.AccountType },
         })
       );
-      router.push("/");
+      if (values.AccountType === "seeker") {
+        router.push("/jobs");
+      } else if (values.AccountType === "employer") {
+        router.push("/employee-setup");
+      }
     } catch (error: any) {
       console.log(error);
       toast.error(error?.data?.msg);
@@ -85,7 +90,7 @@ const Auth: React.FC = () => {
     if (isLogin) {
       handleLogin(values, formProps);
     } else {
-      handleSigup(values, formProps);
+      handleSignup(values, formProps);
     }
   };
 
@@ -106,7 +111,7 @@ const Auth: React.FC = () => {
 
   return (
     <div className="flex items-center h-[100vh] flex-col  relative pt-[5rem] bg-gray-200">
-      <p>WiHire</p>
+      <Logo />
       <Toaster position="top-center" />
       <div className=" border bg-white border-gray-300  w-[450px] rounded-md p-8 mt-5 flex gap-4 flex-col shadow-md">
         {/* <h2 className=" font-semibold text-[20px] text-gray-600 leading-3">
@@ -198,7 +203,7 @@ const Auth: React.FC = () => {
                         setAccount("employer");
                       }}
                     >
-                      I'm looking for worker
+                      I'm looking for workers
                     </p>
                     <input
                       ref={employerRef}

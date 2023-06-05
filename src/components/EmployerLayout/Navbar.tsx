@@ -1,8 +1,10 @@
 import { getCompany } from "@/app/apiQuery";
+
+import Link from "next/link";
 import useProfile from "@/hooks/useProfile";
 import React from "react";
 import { useQuery } from "react-query";
-import { FiBell } from "react-icons/fi";
+import { FiBell, FiPlus } from "react-icons/fi";
 import Menu from "./Menu";
 import { Company } from "@/type/types";
 import { HiOfficeBuilding } from "react-icons/hi";
@@ -21,7 +23,7 @@ const Navbar: React.FC = () => {
         {data?.Logo ? (
           <div className="h-9 w-9 rounded-full">
             <img
-              src={`http://localhost:5000/company/${data.Logo}`}
+              src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${data.Logo}`}
               alt=""
               className=" w-full h-full rounded-full object-cover "
             />
@@ -36,8 +38,13 @@ const Navbar: React.FC = () => {
           <p className=" text-sm font-semibold">{data?.CompanyName}</p>
         </div>
       </div>
-      <div className="flex gap-2 items-center ">
-        <FiBell className=" text-lg mr-4" />
+      <div className="flex gap-2 items-center">
+        <Link href="/employee/job/create-job" className="mr-3 transition">
+          <div className="flex items-center justify-center text-base text-white bg-green-600 p-1 rounded-[10rem] shadow-md shadow-neutral-400 group ease-in duration-200">
+            <FiPlus />
+            <p className="hidden group-hover:block  px-1 text-sm">New</p>
+          </div>
+        </Link>
         <div className="h-9 w-9 bg-indigo-500 rounded-full flex items-center justify-center text-white capitalize">
           {email?.slice(0, 1)}
         </div>

@@ -1,9 +1,11 @@
 import { Profile } from "@/type/types";
 import { month, year } from "@/utils/constant";
 import { Formik } from "formik";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import Input from "../../Utils/Input";
 import { UseMutationResult } from "react-query";
+import { MomoizedCountryMenu } from "@/components/Utils/CountryMenu";
+import useCountry from "@/hooks/useCountry";
 
 type EducationInfoProps = {
   resume?: Profile;
@@ -24,6 +26,14 @@ const EducationInfo: React.FC<EducationInfoProps> = ({
   isEditing = false,
   mutation,
 }) => {
+  const { getByValue } = useCountry();
+  const [country, setCountry] = useState(resume?.Country ?? "");
+  const setCountryOption = useCallback(
+    (value: string) => {
+      setCountry(value);
+    },
+    [country]
+  );
   const initialEdu = resume?.Education?.find((work, idx) => {
     if (index) {
       if (Number(index) === idx) {
@@ -63,6 +73,7 @@ const EducationInfo: React.FC<EducationInfoProps> = ({
     const data = {
       ...values,
       EducationPeriod: period,
+      Country: country,
     };
     if (!index) {
       localStorage.setItem(
@@ -106,6 +117,7 @@ const EducationInfo: React.FC<EducationInfoProps> = ({
     const data = {
       ...values,
       EducationPeriod: period,
+      Country: country,
     };
     if (!index) {
       mutation?.mutate({
@@ -180,9 +192,12 @@ const EducationInfo: React.FC<EducationInfoProps> = ({
             />
             <div className="flex flex-col gap-2">
               <p>
-                City - Nigeria (
-                <span className=" text-blue-600 hover:underline cursor-pointer">
-                  Change
+                Country - {getByValue(country)?.label ?? "Select Country"} (
+                <span className=" hover:underline cursor-pointer">
+                  <MomoizedCountryMenu
+                    setCountryOption={setCountryOption}
+                    text="Change"
+                  />
                 </span>
                 )
               </p>

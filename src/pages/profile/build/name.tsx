@@ -84,6 +84,7 @@ const name: React.FC<nameProps> = () => {
               label="Email Address"
               placeholder=""
               type="email"
+              readonly
             />
             <button
               className=" bg-mid-green text-white w-[100px] py-2 rounded-md"

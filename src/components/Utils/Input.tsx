@@ -16,6 +16,7 @@ type InputProps = {
   error?: any;
   handleBlur?: any;
   other?: UseFormRegisterReturn<string>;
+  readonly?: boolean;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -30,6 +31,7 @@ const Input: React.FC<InputProps> = ({
   handleBlur,
   touched,
   other,
+  readonly,
 }) => {
   return (
     <div className="flex flex-col gap-2 w-full">
@@ -54,6 +56,7 @@ const Input: React.FC<InputProps> = ({
           onChange={onChange}
           onBlur={handleBlur}
           {...other}
+          readOnly={readonly}
         />
       </div>
       {Boolean(touched) && Boolean(error) && (

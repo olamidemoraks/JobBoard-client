@@ -171,7 +171,9 @@ const HireProgress: React.FC<HireProgressProps> = ({
                   : false
               }
             >
-              Move next status
+              {applicant?.Status === "hired"
+                ? "Applicant Hired"
+                : "Move next status"}
             </button>
           )}
         </div>

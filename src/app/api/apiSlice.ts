@@ -4,8 +4,17 @@ import { HYDRATE } from "next-redux-wrapper";
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: `http://localhost:5000/api/v1`,
+    baseUrl: `${process.env.NEXT_PUBLIC_BASEURL}/api/v1`,
     credentials: "include",
+    prepareHeaders: (headers, { getState }: any) => {
+      if (getState().auth?.profile?.token) {
+        headers.set(
+          "authorization",
+          `Bearer ${getState().auth?.profile?.token}`
+        );
+      }
+      return headers;
+    },
   }),
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {

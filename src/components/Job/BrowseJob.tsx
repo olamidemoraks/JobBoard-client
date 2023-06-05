@@ -8,6 +8,7 @@ import JobModal from "../Modals/Job/JobModal";
 import { createSavedJobs, getSavedJobs, removeSavedJobs } from "@/app/apiQuery";
 import useSaved from "@/hooks/useSaved";
 import Loader from "../Utils/Loader";
+import Empty from "../Utils/Empty";
 
 type BrowseJobProps = {
   Jobs: Job[] | undefined;
@@ -91,7 +92,9 @@ const BrowseJob: React.FC<BrowseJobProps> = ({ Jobs, isLoading }) => {
       </div>
     );
   }
-
+  if (Jobs?.length === 0) {
+    content = <Empty text="No Job Found!" />;
+  }
   return (
     <div className="mb-16">
       <CompanyModals

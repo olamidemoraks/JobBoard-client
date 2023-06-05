@@ -34,7 +34,7 @@ const RightSide: React.FC<RightSideProps> = ({
     router.push({ pathname: path, query });
   };
   let content;
-  if (query["section"] === "") {
+  if (query["section"] === "" || query["section"] == undefined) {
     content = <ApplicantProfile download={download} applicant={applicant} />;
   }
   if (query["section"] === "progress") {
@@ -55,7 +55,7 @@ const RightSide: React.FC<RightSideProps> = ({
       <div className=" border-b border-b-gray-300 flex gap-2 px-5">
         <div
           className={`   border-b-[3px] w-max p-4 cursor-pointer  ${
-            query["section"] === ""
+            query["section"] === "" || query["section"] == undefined
               ? "border-b-green-700 hover:border-b-green-700 font-semibold"
               : "border-transparent text-gray-500 hover:border-b-green-700/40"
           }`}

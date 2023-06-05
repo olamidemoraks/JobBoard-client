@@ -114,6 +114,7 @@ export interface Job {
   isActive: boolean;
   Applicants: number;
   createdAt: string;
+  Country?: string;
 }
 
 export interface Overview {

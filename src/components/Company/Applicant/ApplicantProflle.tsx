@@ -23,7 +23,7 @@ const ApplicantProfile: React.FC<ApplicantProfileProps> = ({
     <div className="p-5 flex gap-4 flex-col">
       <div className="flex gap-4 items-center px-4">
         <p className=" font-semibold">Profile Details</p>
-        {applicant?.File && (
+        {applicant?.File && applicant?.File !== "undefined" && (
           <button
             className="px-3 py-2 bg-gray-300 rounded-[5px]"
             onClick={() => download(applicant?.File)}

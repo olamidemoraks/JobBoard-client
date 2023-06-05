@@ -36,8 +36,6 @@ const Profile: React.FC<ProfileProps> = () => {
 
   const { data: company, isLoading } = useQuery<Company>("company", getCompany);
   const [fullDesc, setFullDesc] = useState(false);
-  const description =
-    "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa fuga totam quibusdam atque ipsum minus consequatur consequuntur earum doloribus aliquam aliquid omnis praesentium provident expedita nesciunt et quos, iusto velit cumque accusamus a. Enim doloribus similique unde eius tenetur repudiandae voluptate iste eveniet earum laboriosam a, libero aliquid voluptatibus voluptates. Mollitia esse harum ipsam voluptatem dolore cum itaque labore fuga tempora, deserunt magnam nostrum iusto velit adipisci excepturi cupiditate exercitationem, repellat porro commodi nobis delectus soluta. Fugiat atque nesciunt, quis pariatur consequuntur illum porro dolor ex. Eligendi soluta ipsa quasi nostrum, tempora vitae blanditiis aut amet labore omnis error deserunt.";
   const [selectFile, setSelectFile] = useState<any>();
   const selectFileRef = useRef<HTMLInputElement>(null);
 
@@ -71,13 +69,13 @@ const Profile: React.FC<ProfileProps> = () => {
   }
   return (
     <div className="lg:mx-[4rem]">
-      <div className="w-full  flex gap-7 md:flex-row flex-col md:items-end">
+      <div className="w-full  flex gap-7 md:flex-row flex-col md:items-start">
         <div className="flex flex-col gap-1">
-          <div className=" md:h-[150px] md:w-[150px] h-[100px] w-[100px] rounded-sm flex items-center justify-center flex-col relative ">
+          <div className=" md:h-[120px] md:w-[120px] h-[100px] w-[100px] rounded-sm flex items-center justify-center flex-col relative ">
             {company?.Logo ? (
               <>
                 <img
-                  src={`http://localhost:5000/company/${company.Logo}`}
+                  src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${company.Logo}`}
                   alt=""
                   className=" w-full h-full rounded-full object-cover"
                 />
@@ -131,8 +129,13 @@ const Profile: React.FC<ProfileProps> = () => {
             </Link>
           </div>
           <p className="  w-[75%]  text-sm">
-            {company?.CompanySnippet ??
-              "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis officia ducimus aliquam magni rem fuga temporibus atque consequuntur modi molestiae."}
+            {!company?.CompanySnippet ? (
+              <p>
+                Write a brief description for {company?.CompanyName} company.
+              </p>
+            ) : (
+              company.CompanySnippet
+            )}
           </p>
           <div className="flex items-center gap-6">
             <p className="flex gap-1 items-center text-stone-500 text-[13px]">
@@ -154,28 +157,33 @@ const Profile: React.FC<ProfileProps> = () => {
         <div className="flex-1 ">
           <p className="text-lg font-black py-2">Company description</p>
           <p className="text-justify h-max relative">
-            {fullDesc ? description : description.substring(0, 300)}
-            <div
-              className={`${
-                !fullDesc ? "bg-gradient-to-t  to-white/30 from-white" : ""
-              }   flex justify-center items-end -bottom-10 z-20 absolute w-full h-[150px] `}
-            >
-              <p
-                className=" bg-mid-green text-white py-[3px] px-4 text-sm rounded-full flex items-center gap-1 cursor-pointer"
-                onClick={() => setFullDesc((prev) => !prev)}
-              >
-                Read{" "}
-                {!fullDesc ? (
-                  <>
-                    more <HiChevronDown />
-                  </>
-                ) : (
-                  <>
-                    less <HiChevronUp />
-                  </>
-                )}
-              </p>
-            </div>
+            {fullDesc
+              ? company?.CompanyDesc
+              : company?.CompanyDesc.substring(0, 300)}
+            {company?.CompanyDesc !== undefined &&
+              company?.CompanyDesc?.length >= 300 && (
+                <div
+                  className={`${
+                    !fullDesc ? "bg-gradient-to-t  to-white/30 from-white" : ""
+                  }   flex justify-center items-end -bottom-10 z-20 absolute w-full h-[150px] `}
+                >
+                  <p
+                    className=" bg-mid-green text-white py-[3px] px-4 text-sm rounded-full flex items-center gap-1 cursor-pointer"
+                    onClick={() => setFullDesc((prev) => !prev)}
+                  >
+                    Read{" "}
+                    {!fullDesc ? (
+                      <>
+                        more <HiChevronDown />
+                      </>
+                    ) : (
+                      <>
+                        less <HiChevronUp />
+                      </>
+                    )}
+                  </p>
+                </div>
+              )}
           </p>
         </div>
         <div className="flex-[0.5] md:mt-0 mt-5">

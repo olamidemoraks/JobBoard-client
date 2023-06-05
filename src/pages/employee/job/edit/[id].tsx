@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import {
@@ -20,6 +20,34 @@ import { yearOfExperience } from "@/utils/constant";
 import { IoAdd, IoClose } from "react-icons/io5";
 import AuthRoute from "@/components/Layout/AuthRoute";
 import Loader from "@/components/Utils/Loader";
+import "react-quill/dist/quill.snow.css";
+import dynamic from "next/dynamic";
+import useCountry from "@/hooks/useCountry";
+import { MomoizedCountryMenu } from "@/components/Utils/CountryMenu";
+
+const QuillNoSSRWrapper = dynamic(import("react-quill"), {
+  ssr: false,
+  loading: () => <Loader />,
+});
+
+const modules = {
+  toolbar: [
+    [{ font: [] }],
+    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+    ["bold", "italic", "underline", "strike"],
+    [{ color: [] }, { background: [] }],
+    [{ script: "sub" }, { script: "super" }],
+    ["blockquote", "code-block"],
+    [{ list: "ordered" }, { list: "bullet" }],
+    [{ indent: "-1" }, { indent: "+1" }, { align: [] }],
+    ["link", "image", "video"],
+    ["clean"],
+  ],
+  clipboard: {
+    // toggle to add extra line breaks when pasting HTML:
+    matchVisual: false,
+  },
+};
 
 type EditJobProps = {};
 
@@ -87,11 +115,21 @@ const EditJob: React.FC<EditJobProps> = () => {
   const [frequency, setFrequency] = useState("yr");
   const [isDate, setIsDate] = useState(false);
   const [deadline, setDeadline] = useState("");
+  const [description, setDescription] = useState(job?.Description ?? "");
 
   const [Experience, setExperience] = useState<any>("");
 
   const [skills, setSkills] = useState<string[]>([]);
   const [skill, setSkill] = useState("");
+  //country selecting
+  const { getByValue } = useCountry();
+  const [country, setCountry] = useState("");
+  const setCountryOption = useCallback(
+    (value: string) => {
+      setCountry(value);
+    },
+    [country]
+  );
 
   useEffect(() => {
     if (isLoading === false) {
@@ -112,6 +150,7 @@ const EditJob: React.FC<EditJobProps> = () => {
       setDeadline(job?.Deadline ?? "");
       setExperience(job?.Experience ?? "");
       setSkills(job?.Skills ?? []);
+      setDescription(job?.Description ?? "");
     }
   }, [job, isLoading]);
 
@@ -159,6 +198,8 @@ const EditJob: React.FC<EditJobProps> = () => {
       Deadline: deadline,
       Experience,
       Skills: [...skills],
+      Description: description,
+      Country: country,
     };
     try {
       mutation.mutate({ values: data, id: job?._id });
@@ -198,6 +239,17 @@ const EditJob: React.FC<EditJobProps> = () => {
               placeholder="Enter Job Title"
               id="title"
             />
+            <p className="w-full">
+              City - {getByValue(job?.Country ?? "")?.label ?? "Select Country"}{" "}
+              (
+              <span className=" hover:underline cursor-pointer">
+                <MomoizedCountryMenu
+                  setCountryOption={setCountryOption}
+                  text="Change"
+                />
+              </span>
+              )
+            </p>
             <Input
               value={values.Location}
               error={errors.Location}
@@ -292,6 +344,14 @@ const EditJob: React.FC<EditJobProps> = () => {
               ></textarea>
             </div>
 
+            <QuillNoSSRWrapper
+              modules={modules}
+              value={description}
+              onChange={setDescription}
+              theme="snow"
+              className="min-h-[60vh] flex-1 mb-4"
+              placeholder="Job description goes here..."
+            />
             <div>
               <p className=" font-semibold">*Benefit</p>
               <div className="p-4  border-[1px] border-gray-200 flex gap-2 flex-col rounded-lg">

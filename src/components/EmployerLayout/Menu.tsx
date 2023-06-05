@@ -61,7 +61,7 @@ const Menu: React.FC = () => {
           borderColor="gray.200"
           color="gray.600"
         >
-          <Link href="/employee/profile" className="w-full">
+          <Link href="/employee" className="w-full">
             <Flex
               align={"center"}
               justify="space-between"
@@ -69,7 +69,7 @@ const Menu: React.FC = () => {
               _hover={{ bg: "gray.200" }}
               p="11px 15px"
             >
-              <p className=" font-bold bg-transparent">Profile</p>
+              <p className=" font-bold bg-transparent">Home</p>
               <Icon as={AiOutlineRight} bg="transparent" />
             </Flex>
           </Link>

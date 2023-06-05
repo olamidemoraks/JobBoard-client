@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Input from "../Utils/Input";
 import { Button } from "@chakra-ui/react";
+import { MomoizedCountryMenu } from "../Utils/CountryMenu";
+import useCountry from "@/hooks/useCountry";
 
 type StartProps = {
   isRemote: boolean;
@@ -34,12 +36,22 @@ const Start: React.FC<StartProps> = ({
     resolver: yupResolver(schema),
   });
 
+  const { getByValue } = useCountry();
+  const [country, setCountry] = useState("");
+  const setCountryOption = useCallback(
+    (value: string) => {
+      setCountry(value);
+    },
+    [country]
+  );
+
   const handleFormSubmit = (data: any) => {
     setformData((prev: any) => {
       return {
         ...prev,
         ...data,
         isRemote,
+        Country: country,
       };
     });
     setSection("description");
@@ -66,6 +78,16 @@ const Start: React.FC<StartProps> = ({
           </p>
         )}
       </div>
+      <p className="w-full">
+        City - {getByValue(country)?.label ?? "Select Country"} (
+        <span className=" hover:underline cursor-pointer">
+          <MomoizedCountryMenu
+            setCountryOption={setCountryOption}
+            text="Change"
+          />
+        </span>
+        )
+      </p>
       <div>
         <Input
           other={{ ...register("Location") }}

@@ -60,8 +60,8 @@ const preference: React.FC = () => {
       const data = await createProfile(
         JSON.parse(localStorage.getItem("profile") as string)
       ).unwrap();
+      localStorage.removeItem("profile");
       router.push("success");
-      // localStorage.removeItem("profile");
     } catch (error) {
       console.log(error);
     }
