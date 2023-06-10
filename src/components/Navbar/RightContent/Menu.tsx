@@ -33,7 +33,7 @@ const Menu: React.FC<MenuProps> = ({ user }) => {
   const { email, isExpired } = useProfile();
   const dispatch = useAppDispatch();
   const handleLogout = async () => {
-    dispatch(logout());
+    dispatch(logout({}));
     googleLogout();
     router.push("/auth");
     queryClient.clear();
