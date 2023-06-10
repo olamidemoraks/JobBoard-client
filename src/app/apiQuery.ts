@@ -2,7 +2,9 @@ const baseUrl = `${process.env.NEXT_PUBLIC_BASEURL}/api/v1`;
 let token: string = "";
 
 if (typeof window !== "undefined") {
-  const info = JSON.parse(localStorage.getItem("_profile") as string);
+  const info = JSON.parse(localStorage.getItem("_profile") as string) ?? {
+    token: "",
+  };
   token = info.token;
 }
 
