@@ -1,20 +1,32 @@
 import { FormType } from "@/pages/employee-setup";
 import React from "react";
-import { SetForm } from "react-hooks-helper";
-import { useForm } from "react-hook-form";
+import {
+  UseFormRegister,
+  FieldErrors,
+  useForm,
+  UseFormGetValues,
+} from "react-hook-form";
 import EmployeeBuildLayout from "../Layout/EmployeeBuildLayout";
 import Input from "../Utils/Input";
 
 type CompanyInfoProps = {
-  navigation: any;
-  formData: FormType;
-  setForm: SetForm;
+  // navigation: any;
+  // formData: FormType;
+  // setForm: SetForm;
+  getAllValues: UseFormGetValues<FormType>;
+  setValue: (id: any, value: any) => void;
+  onNext: () => void;
+  onBack: () => void;
 };
 
 const CompanyInfo: React.FC<CompanyInfoProps> = ({
-  navigation,
-  formData,
-  setForm,
+  // navigation,
+  // formData,
+  // setForm,
+  getAllValues,
+  setValue,
+  onNext,
+  onBack,
 }) => {
   const {
     register,
@@ -22,22 +34,23 @@ const CompanyInfo: React.FC<CompanyInfoProps> = ({
     formState: { errors },
   } = useForm({
     defaultValues: {
-      ...formData,
+      Snippet: getAllValues().Snippet ?? "",
+      Status: getAllValues().Status ?? "",
+      CompanyDesc: getAllValues().CompanyDesc ?? "",
     },
   });
 
+  const handleInfoSubmit = (values: any) => {
+    for (let value of Object.entries(values)) {
+      setValue(value[0], value[1]);
+    }
+    onNext();
+  };
   return (
     <EmployeeBuildLayout width="w-[60%]">
       <div className="mt-4">
         <p className=" text-xl font-bold text-center">Company Details</p>
-        <form
-          onSubmit={handleSubmit((data) => {
-            formData.CompanyDesc = data.CompanyDesc;
-            formData.Snippet = data.Snippet;
-            formData.Status = data.Status;
-            navigation.next();
-          })}
-        >
+        <div>
           <div className="flex flex-col gap-3 mt-5">
             <label className=" font-black" htmlFor="size">
               Write a short detail about your company
@@ -79,7 +92,7 @@ const CompanyInfo: React.FC<CompanyInfoProps> = ({
                   </option>
                 </select>
               </div>
-              {errors.CompanySize && (
+              {errors.Status && (
                 <p className=" text-red-500 text-[12px]">
                   please select the option that best describe your hiring need
                 </p>
@@ -101,19 +114,21 @@ const CompanyInfo: React.FC<CompanyInfoProps> = ({
           </div>
           <div className="flex justify-between mt-6">
             <button
+              type="button"
               className="border border-emerald-600 text-emerald-600 px-6 py-2 rounded-full font-bold"
-              onClick={() => navigation.previous()}
+              onClick={onBack}
             >
               Previous
             </button>
             <button
               className=" bg-emerald-600 text-white px-6 py-2 rounded-full font-bold"
-              type="submit"
+              type="button"
+              onClick={handleSubmit((value) => handleInfoSubmit(value))}
             >
               Continue
             </button>
           </div>
-        </form>
+        </div>
       </div>
     </EmployeeBuildLayout>
   );

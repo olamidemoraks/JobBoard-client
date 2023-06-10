@@ -98,6 +98,7 @@ const ApplyJobModal: React.FC<ApplyJobModalProps> = ({
               <div className="flex gap-2">
                 <div className=" h-8 w-8 rounded-md">
                   <img
+                    loading="lazy"
                     className=" h-full w-full object-cover rounded-md"
                     src="/images/female.jpg"
                     alt=""
@@ -172,6 +173,7 @@ const ApplyJobModal: React.FC<ApplyJobModalProps> = ({
             <div className="flex gap-2 items-center">
               <div className=" h-8 w-8 rounded-md">
                 <img
+                  loading="lazy"
                   className=" h-full w-full object-cover rounded-md"
                   src="/images/female.jpg"
                   alt=""

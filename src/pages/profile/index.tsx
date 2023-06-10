@@ -93,6 +93,7 @@ const Profile: React.FC<ProfileProps> = () => {
             {data.Photo ? (
               <>
                 <img
+                  loading="lazy"
                   className=" h-full w-full object-cover"
                   src={`${process.env.NEXT_PUBLIC_BASEURL}/profile/${data.Photo}`}
                   alt="profile"
@@ -279,16 +280,18 @@ const Profile: React.FC<ProfileProps> = () => {
           <div className="py-8 px-16 border border-gray-200 rounded-sm mt-2 flex flex-col items-start gap-3">
             <div className="flex gap-6">
               <p className=" text-[15px] text-gray-400">Skills</p>
-              <div className="flex ">
+              <div className="flex gap-1 ">
                 {data?.Skills?.map((skill) => (
-                  <p className="text-[14px]">{skill},</p>
+                  <>
+                    <p className="text-[14px]">{skill}, </p>
+                  </>
                 ))}
               </div>
             </div>
             <div className="flex gap-6">
               <p className=" text-[15px] text-gray-400">Location</p>
               <p className="text-[14px]">
-                {getByValue(data.Country)?.label} ,{data.City_State}
+                {getByValue(data.Country)?.label}, {data.City_State}
               </p>
             </div>
           </div>

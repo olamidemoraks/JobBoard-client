@@ -23,22 +23,22 @@ const RightContent: React.FC<RightContentProps> = ({ user }) => {
         }   md:flex hidden gap-[2rem]  items-center flex-1`}
       >
         <Link
-          className=" px-2 flex items-center ease-linear duration-200"
+          className=" px-2 flex items-center transition duration-200 hover:underline"
           href={"/"}
         >
           Home
         </Link>
         <Link
-          className=" px-2  flex items-center ease-linear duration-200"
+          className=" px-2  flex items-center transition duration-200 hover:underline"
           href={"/jobs"}
         >
           Jobs
         </Link>
         <Link
-          className="   px-2  flex items-center ease-linear duration-200"
+          className="   px-2  flex items-center transition duration-200 hover:underline"
           href={"/employee"}
         >
-          Employer
+          Post Job
         </Link>
       </div>
       {user ? <Auth user={user} /> : <NotAuth user={user} />}

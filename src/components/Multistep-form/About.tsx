@@ -2,19 +2,21 @@ import { useCreateCompanyMutation } from "@/feature/employer/employerApiSlice";
 import { FormType } from "@/pages/employee-setup";
 import { sizes, title } from "@/utils/constant";
 import React from "react";
-import { SetForm } from "react-hooks-helper";
-import { useForm } from "react-hook-form";
+import { useForm, UseFormGetValues } from "react-hook-form";
 import EmployeeBuildLayout from "../Layout/EmployeeBuildLayout";
 import Input from "../Utils/Input";
 import { useRouter } from "next/router";
 
 type AboutProps = {
-  navigation: any;
-  formData: FormType;
-  setForm: SetForm;
+  // navigation: any;
+  // formData: FormType;
+  // setForm: SetForm;
+  getAllValues: UseFormGetValues<FormType>;
+  setValue: (id: any, value: any) => void;
+  onBack: () => void;
 };
 
-const About: React.FC<AboutProps> = ({ navigation, formData, setForm }) => {
+const About: React.FC<AboutProps> = ({ setValue, onBack, getAllValues }) => {
   const router = useRouter();
   const [createCompany, { isLoading }] = useCreateCompanyMutation();
   const {
@@ -23,16 +25,21 @@ const About: React.FC<AboutProps> = ({ navigation, formData, setForm }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      ...formData,
+      Title: getAllValues().Title ?? "",
+      Location: getAllValues().Location ?? "",
+      CompanySize: getAllValues().CompanySize ?? "",
+      Url: getAllValues().Url ?? "",
     },
   });
-  const { Url, Location } = formData;
 
-  const handleFormSubmit = async () => {
+  const handleFormSubmit = async (values: any) => {
+    for (let value of Object.entries(values)) {
+      setValue(value[0], value[1]);
+    }
     try {
-      const data = await createCompany(formData).unwrap();
+      const data = await createCompany(getAllValues()).unwrap();
       router.push("/employee/job/create-job");
-      console.log(formData);
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -42,15 +49,11 @@ const About: React.FC<AboutProps> = ({ navigation, formData, setForm }) => {
       <div className="mt-4">
         <p className=" text-xl font-bold text-center">Finalize Your Details</p>
 
-        <form
-          onSubmit={handleSubmit((data) => {
-            formData.Title = data.Title;
-            formData.CompanySize = data.CompanySize;
-            handleFormSubmit();
-          })}
-        >
+        <form onSubmit={handleSubmit((data) => handleFormSubmit(data))}>
           <div className="mt-3">
-            <label htmlFor="title">Your current title *</label>
+            <label htmlFor="title" className=" font-black pb-2">
+              Your current title *
+            </label>
             <div
               className={`${
                 Boolean(errors.Title)
@@ -78,14 +81,15 @@ const About: React.FC<AboutProps> = ({ navigation, formData, setForm }) => {
           </div>
           <div className="flex flex-col gap-3 mt-5">
             <Input
+              other={{ ...register("Location") }}
               label="Company Location"
               name="Location"
-              value={Location}
-              onChange={setForm}
               id="zip"
             />
             <div>
-              <label htmlFor="size">Company Size *</label>
+              <label htmlFor="size" className=" font-black pb-2">
+                Company Size *
+              </label>
               <div
                 className={`${
                   Boolean(errors.CompanySize)
@@ -115,11 +119,10 @@ const About: React.FC<AboutProps> = ({ navigation, formData, setForm }) => {
             </div>
 
             <Input
+              other={{ ...register("Url") }}
               label="Company Website"
               placeholder="https://url"
               name="Url"
-              value={Url}
-              onChange={setForm}
               id="url"
               type="url"
             />
@@ -128,7 +131,8 @@ const About: React.FC<AboutProps> = ({ navigation, formData, setForm }) => {
           <div className="flex justify-between mt-6 gap-3">
             <button
               className="border border-emerald-600 text-emerald-600 px-6 py-2 rounded-full font-bold"
-              onClick={() => navigation.previous()}
+              onClick={onBack}
+              type="button"
             >
               Previous
             </button>

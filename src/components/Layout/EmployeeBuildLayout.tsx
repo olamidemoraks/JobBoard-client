@@ -1,4 +1,5 @@
 import React from "react";
+import Logo from "../Utils/Logo";
 
 type EmployeeBuildLayoutProps = {
   children: any;
@@ -15,7 +16,7 @@ const EmployeeBuildLayout: React.FC<EmployeeBuildLayoutProps> = ({
         <div className={` h-full bg-green-700 ${width} absolute`} />
       </div>
       <div className="flex items-center mt-20 flex-col">
-        <h2>Wihire</h2>
+        <Logo />
         <div className="max-w-[600px] w-[90%]">{children}</div>
       </div>
     </div>

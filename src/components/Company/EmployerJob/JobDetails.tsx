@@ -33,6 +33,7 @@ const JobDetails: React.FC<JobDetailsProps> = ({ Job }) => {
           <div className="flex gap-2">
             <div className=" h-8 w-8 rounded-md">
               <img
+                loading="lazy"
                 className=" h-full w-full object-cover rounded-md"
                 src="/images/female.jpg"
                 alt=""
@@ -101,6 +102,7 @@ const JobDetails: React.FC<JobDetailsProps> = ({ Job }) => {
               <div className="flex gap-2">
                 <div className=" h-6 w-6 rounded-sm">
                   <img
+                    loading="lazy"
                     className=" h-full w-full object-cover rounded-md"
                     src="/images/female.jpg"
                     alt=" font-black text-sm"

@@ -24,9 +24,9 @@ const ProfileBuildLayout: React.FC<ProfileBuildLayoutProps> = ({
               className=" text-[19px] cursor-pointer"
             />
 
-            <button className="font-semibold text-mid-green ">
+            {/* <button className="font-semibold text-mid-green ">
               Save and exit
-            </button>
+            </button> */}
           </div>
           <div className="mt-3 bg-gray-300 w-full">
             <div className={`${width} h-[4px] rounded-md bg-mid-green `} />

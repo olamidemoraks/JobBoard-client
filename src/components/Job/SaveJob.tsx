@@ -76,17 +76,17 @@ const SaveJob: React.FC<SaveJobProps> = () => {
   console.log("Job", isError);
 
   let content;
-  if (Jobs.length !== 0) {
-    content = Jobs.map((job: any) => {
+  if (Jobs?.length !== 0) {
+    content = Jobs?.map((job: any) => {
       // const isSaved = !!Jobs?.find((saveJob: any) => saveJob._id === job._id);
       const { isSaved, handleSaveOrUnsaveJob } = useSaved({
-        jobId: job._id,
+        jobId: job?._id,
         savedJobs: Jobs,
         mutation: mutation,
       });
       return (
         <JobCard
-          key={job._id}
+          key={job?._id}
           Job={job}
           handleCompanyModel={handleCompanyModel}
           handleJobModel={handleJobModel}

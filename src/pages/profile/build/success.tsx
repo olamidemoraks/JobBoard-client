@@ -8,6 +8,7 @@ const success: React.FC = () => {
       <div className="flex flex-col justify-center text-center gap-5 items-center">
         <div className="h-[200px] w-[200px] ">
           <img
+            loading="lazy"
             className="w-full h-full"
             src="../../images/success.jpg"
             alt="success"

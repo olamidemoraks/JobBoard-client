@@ -133,15 +133,16 @@ const JobModal: React.FC<JobModalProps> = ({
           <div className="flex gap-3 cursor-pointer">
             <div className="sm:h-12 sm:w-12 h-8 w-8 rounded-md">
               <img
+                loading="lazy"
                 className=" h-full w-full object-cover rounded-md"
-                src="/images/female.jpg"
+                src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${company?.Logo}`}
                 alt=""
               />
             </div>
             <div className="flex flex-col flex-1">
               <p className=" font-black text-[17px]">{company?.CompanyName}</p>
               <p className=" text-gray-700 text-[14px]">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit
+                {company?.CompanySnippet}
               </p>
             </div>
           </div>
@@ -149,29 +150,20 @@ const JobModal: React.FC<JobModalProps> = ({
             <div className="flex-1 flex flex-col ">
               <div className="flex gap-1 bg-green-600/20 text-green-900 p-[3px] px-2 rounded-[30px] text-xs items-center uppercase w-max mb-2">
                 <IoCheckmarkCircle className=" text-base" />{" "}
-                <p>actively hiring</p>
+                <p>{company?.Status}</p>
               </div>
-              <div className="">
-                {/* company description */}
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum
-                quisquam earum, vitae omnis consequatur minus voluptatum! Lorem
-                ipsum dolor sit amet consectetur adipisicing elit. Officia autem
-                facilis libero. Esse, sequi eum.
-              </div>
+              <div className="">{company?.CompanyDesc}</div>
             </div>
             <div className="flex-[0.3] border border-gray-200 rounded-[7px] hidden px-4 py-2 gap-[10px] flex-col md:flex">
               <div className="flex flex-col gap-1">
                 <p className="font-black">Website</p>
                 <a className=" text-blue-700 text-sm" href={company?.Url}>
-                  {company?.Url} chippyvibe.com
+                  {company?.Url}
                 </a>
               </div>
               <div className="flex flex-col gap-1">
                 <p className=" font-black">Location</p>
-                <p className="text-sm">
-                  {/* {company?.Location}   */}
-                  Cambridge
-                </p>
+                <p className="text-sm">{company?.Location}</p>
               </div>
               <div className="flex flex-col gap-1">
                 <p className=" font-black">Company size</p>
@@ -254,8 +246,9 @@ const JobModal: React.FC<JobModalProps> = ({
             <div className="flex gap-3 cursor-pointer">
               <div className=" h-12 w-12 rounded-md">
                 <img
+                  loading="lazy"
                   className=" h-full w-full object-cover rounded-md"
-                  src="/images/female.jpg"
+                  src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${company?.Logo}`}
                   alt=""
                 />
               </div>
@@ -283,7 +276,7 @@ const JobModal: React.FC<JobModalProps> = ({
                 </p>
                 {moment(Job?.Deadline).toISOString() <
                   moment().toISOString() && (
-                  <p className="bg-red-600 text-white px-1 py-[2px] text-xs text-center rounded-md font-light">
+                  <p className="bg-red-600 text-white px-1 mt-2 text-xs text-center rounded-md font-light">
                     Expired ${moment(Job?.Deadline).fromNow()}
                   </p>
                 )}
@@ -328,8 +321,9 @@ const JobModal: React.FC<JobModalProps> = ({
                 <div className="flex gap-2">
                   <div className=" h-8 w-8 rounded-md">
                     <img
+                      loading="lazy"
                       className=" h-full w-full object-cover rounded-md"
-                      src="/images/female.jpg"
+                      src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${company?.Logo}`}
                       alt=""
                     />
                   </div>
@@ -394,6 +388,7 @@ const JobModal: React.FC<JobModalProps> = ({
                     <div className="flex gap-2">
                       <div className=" h-6 w-6 rounded-sm">
                         <img
+                          loading="lazy"
                           className=" h-full w-full object-cover rounded-md"
                           src="/images/female.jpg"
                           alt=" font-black text-sm"

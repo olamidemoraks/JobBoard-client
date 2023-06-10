@@ -35,6 +35,7 @@ const LeftSide: React.FC<LeftSideProps> = ({
           <div className="md:h-[100px] md:w-[100px] h-[100px] w-[100px] rounded-full flex items-center justify-center bg-gray-400">
             {profile?.Photo ? (
               <img
+                loading="lazy"
                 className=" h-full w-full object-cover rounded-full"
                 src={`${process.env.NEXT_PUBLIC_BASEURL}/profile/${applicant?.profile.Photo}`}
                 alt="profile image"

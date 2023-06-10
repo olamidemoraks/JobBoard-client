@@ -60,6 +60,7 @@ const RecentApplicant: React.FC<RecentApplicantProps> = ({
               {!applicant?.profile?.Photo ? (
                 <div className="h-10 w-10 rounded-full bg-indigo-300 flex items-center justify-center">
                   <img
+                    loading="lazy"
                     src={`${process.env.NEXT_PUBLIC_BASEURL}/profile/${applicant?.profile?.Photo}`}
                     alt="profile"
                     className=" w-full h-full object-cover rounded-full"

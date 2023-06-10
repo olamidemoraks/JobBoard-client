@@ -25,6 +25,7 @@ const ApplicantCard: React.FC<ApplicantCardProps> = ({ applicant }) => {
           {applicant?.profile?.Photo ? (
             <div className=" h-10 w-10 rounded-full">
               <img
+                loading="lazy"
                 className=" h-full w-full object-cover rounded-full"
                 src={`${process.env.NEXT_PUBLIC_BASEURL}/profile/${applicant?.profile?.Photo}`}
                 alt=""

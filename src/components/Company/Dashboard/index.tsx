@@ -27,7 +27,7 @@ const Dashboard: React.FC<DashboardProps> = ({ overviews }) => {
         </p>
       </div>
       <div className=" flex gap-10 w-full mt-6 md:flex-row flex-col ">
-        <div className="flex gap-y-1 gap-x-3 lg-[80%] md:w-[70%] md:flex-row flex-col lg:flex-nowrap md:flex-wrap h-max">
+        <div className="flex gap-y-1 gap-x-3 lg:w-[80%] md:w-[70%] md:flex-row flex-col lg:flex-nowrap md:flex-wrap h-max">
           <ActivityDisplay
             name="total applications"
             value={overviews?.totalCandidates}
@@ -46,7 +46,7 @@ const Dashboard: React.FC<DashboardProps> = ({ overviews }) => {
             <BsMailbox2 className=" text-white h-1/2 w-1/2 " />
           </ActivityDisplay>
         </div>
-        <div className=" flex flex-col justify-evenly gap-5 mb-5">
+        <div className=" w-[40%] flex flex-col justify-evenly gap-5 mb-5">
           <JobPosted jobs={overviews?.firstFiveJob} />
           <RecentApplicant applicant={overviews?.applicantWithProfile} />
         </div>

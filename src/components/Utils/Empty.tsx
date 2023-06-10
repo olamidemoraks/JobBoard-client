@@ -13,6 +13,7 @@ const Empty: React.FC<EmptyProps> = ({
     <div className="flex flex-col items-center justify-center">
       <div className="w-[400px] h-[400px]">
         <img
+          loading="lazy"
           src={imageName}
           alt="empty"
           className="w-full h-full object-contain grayscale"

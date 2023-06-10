@@ -75,6 +75,7 @@ const Profile: React.FC<ProfileProps> = () => {
             {company?.Logo ? (
               <>
                 <img
+                  loading="lazy"
                   src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${company.Logo}`}
                   alt=""
                   className=" w-full h-full rounded-full object-cover"
@@ -159,7 +160,7 @@ const Profile: React.FC<ProfileProps> = () => {
           <p className="text-justify h-max relative">
             {fullDesc
               ? company?.CompanyDesc
-              : company?.CompanyDesc.substring(0, 300)}
+              : company?.CompanyDesc?.substring(0, 300)}
             {company?.CompanyDesc !== undefined &&
               company?.CompanyDesc?.length >= 300 && (
                 <div

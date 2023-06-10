@@ -28,7 +28,7 @@ const JobPosted: React.FC<JobPostedProps> = ({ jobs }) => {
     mutation.mutate({ values: value, id: job?._id });
   };
   return (
-    <div className="">
+    <div className="w-full min-h-[4rem] ">
       <div className="flex items-center justify-between">
         <p className=" text-neutral-600 ">Jobs Posted</p>
         <div className="flex items-center justify-between gap-3">

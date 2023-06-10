@@ -105,21 +105,35 @@ const CompanyModals: React.FC<CompanyModalsProps> = ({
               {Job?.Title}
             </p>
             <div className="flex gap-3 flex-wrap">
-              {Job?.Skills.map((skill) => (
-                <p className="text-[12px] text-black/75">{skill}</p>
+              {Job?.Skills.map((skill, idx) => (
+                <p
+                  key={idx}
+                  className="text-[12px] text-gray-600 bg-gray-300 rounded-[9px] px-2"
+                >
+                  {skill}
+                </p>
               ))}
             </div>
           </div>
           <div className="flex  gap-[2px] items-center capitalize">
-            <p className="text-black/50 text-[13px] font-semibold">
+            <p className="text-zink-400  text-[13px] font-semibold">
               <span>{frequently[Job?.frequency ?? "mo"]}: </span>
-              {currency[Job?.currency ?? "USD"]}
-              {Job?.PayMin.toLocaleString()}-{currency[Job?.currency ?? "USD"]}
+              {currency[Job?.currency ?? "USD"] === "N" ? (
+                <span>&#8358;</span>
+              ) : (
+                currency[Job?.currency ?? "USD"]
+              )}
+              {Job?.PayMin.toLocaleString()}-{" "}
+              {currency[Job?.currency ?? "USD"] === "N" ? (
+                <span>&#8358;</span>
+              ) : (
+                currency[Job?.currency ?? "USD"]
+              )}
               {Job?.PayMax.toLocaleString()}
             </p>
 
-            {Job?.isRemote && <p className="text-black/50">- Remote</p>}
-            {Job?.Address && <p className="text-black/50">- {Job.Address}</p>}
+            {Job?.isRemote && <p className="text-black/70">- Remote</p>}
+            {Job?.Address && <p className="text-black/70">- {Job.Address}</p>}
           </div>
         </div>
 
@@ -172,17 +186,18 @@ const CompanyModals: React.FC<CompanyModalsProps> = ({
           <div className="flex gap-3 cursor-pointer">
             <div className=" h-12 w-12 rounded-md">
               <img
+                loading="lazy"
                 className=" h-full w-full object-cover rounded-md"
-                src="/images/female.jpg"
+                src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${company?.Logo}`}
                 alt=""
               />
             </div>
             <div className="flex flex-col gap-1 w-[90%]">
               <p className=" font-black text-[17px]">{company?.CompanyName}</p>
               <p className=" text-gray-700 text-[14px]">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit
+                {company?.CompanySnippet}
               </p>
-              <div className="flex text-gray-400 items-center gap-1 uppercase text-[12px]">
+              <div className="flex text-neutral-500 items-center gap-1 uppercase text-[12px]">
                 <IoPeople />
                 <p>{company?.CompanySize?.split(" to ").join("-")} Employees</p>
               </div>
@@ -197,29 +212,20 @@ const CompanyModals: React.FC<CompanyModalsProps> = ({
                   <IoCheckmarkCircle className=" text-base" />{" "}
                   <p>actively hiring</p>
                 </div>
-                <div>
-                  {/* company description */}
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum
-                  quisquam earum, vitae omnis consequatur minus voluptatum!
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Officia autem facilis libero. Esse, sequi eum.
-                </div>
+                <div>{company?.CompanyDesc}</div>
               </div>
-              <div className="flex-[0.3] border border-gray-200 rounded-[7px] md:flex p-3 gap-4 flex-col hidden">
-                <div className="flex flex-col gap-2">
+              <div className="flex-[0.3] border border-gray-200 rounded-[7px] md:flex p-3 gap-2 flex-col hidden">
+                <div className="flex flex-col gap-1">
                   <p className=" font-black">Website</p>
                   <a className=" text-blue-700 text-sm" href={company?.Url}>
-                    {company?.Url} chippyvibe.com
+                    {company?.Url}
                   </a>
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-1">
                   <p className=" font-black">Location</p>
-                  <p className="text-sm">
-                    {/* {company?.Location}   */}
-                    Cambridge
-                  </p>
+                  <p className="text-sm">{company?.Location}</p>
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-1">
                   <p className=" font-black">Company size</p>
                   <p className="text-sm">{company?.CompanySize} people</p>
                 </div>

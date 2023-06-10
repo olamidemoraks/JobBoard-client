@@ -23,6 +23,7 @@ const Navbar: React.FC = () => {
         {data?.Logo ? (
           <div className="h-9 w-9 rounded-full">
             <img
+              loading="lazy"
               src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${data.Logo}`}
               alt=""
               className=" w-full h-full rounded-full object-cover "
