@@ -15,7 +15,6 @@ type MenuProps = {
 };
 import { googleLogout } from "@react-oauth/google";
 import { useRouter } from "next/router";
-import { useAppDispatch } from "@/app/hooks";
 import { logout } from "@/feature/auth/authSlice";
 import Link from "next/link";
 import { useMutation, useQueryClient } from "react-query";
@@ -31,12 +30,11 @@ const Menu: React.FC<MenuProps> = ({ user }) => {
   const [sendLogout] = useLogoutMutation();
 
   const { email, isExpired } = useProfile();
-  const dispatch = useAppDispatch();
   const handleLogout = async () => {
-    sendLogout();
+    await sendLogout();
     googleLogout();
-    router.push("/auth");
     queryClient.clear();
+    router.push("/auth");
   };
   return (
     <ChakraMenu>
