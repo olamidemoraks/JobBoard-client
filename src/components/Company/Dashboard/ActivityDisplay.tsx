@@ -19,7 +19,7 @@ const ActivityDisplay: React.FC<ActivityDisplayProps> = ({
     >
       <div className="flex flex-col">
         <p className=" capitalize text-gray-500 text-left">{name}</p>
-        <p className=" text-[30px] font-semibold text-black">{value}</p>
+        <p className=" text-[30px] font-semibold text-black">{value ?? 0}</p>
       </div>
       <div
         className={`${bgColor} flex items-center justify-center h-[50px] w-[50px] rounded-lg bg-black/30`}

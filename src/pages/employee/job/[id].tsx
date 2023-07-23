@@ -135,7 +135,7 @@ const JobDetail: React.FC<JobDetailProps> = () => {
             </p>
           </div>
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2  md:flex-row flex-col">
           <Link
             href={`/employee/job/edit/${router.query.id}`}
             className="bg-gray-300/30 hover:bg-gray-300/70 rounded-full px-2 py-[3px] flex items-center gap-1 "
@@ -143,8 +143,6 @@ const JobDetail: React.FC<JobDetailProps> = () => {
             <p className="text-neutral-500">Edit</p>{" "}
             <HiPencil className="text-neutral-500" />
           </Link>
-
-          <div className="h-[24px] w-[1px] bg-gray-300" />
 
           <div
             className=" bg-gray-300/30 rounded-full px-2 py-[3px] flex items-center gap-1 cursor-pointer hover:bg-gray-300/70"

@@ -17,7 +17,7 @@ const Hero: React.FC<HeroProps> = () => {
   );
 
   return (
-    <div className="bg-gradient relative top-0 left-0 right-0 w-[100%] mx-auto  flex items-center overflow-x-hidden  overflow-y-scroll xl:px-[260px] lg:px-[100px]  md:px-[40px] px-[100px]  justify-between pt-[8rem] md:flex-row flex-col-reverse h-screen  lg:gap-[2rem] md:gap-[6rem] sm:gap-[2px] snap-mandatory snap-start">
+    <div className="bg-gradient relative top-0 left-0 right-0 w-[100%] mx-auto  flex items-center overflow-x-hidden  overflow-y-scroll lg:px-[100px]  md:px-[40px] px-[3rem]  justify-between pt-[8rem] md:flex-row flex-col-reverse h-screen  lg:gap-[2rem] md:gap-[6rem] sm:gap-[2px] snap-mandatory snap-start">
       <div className="flex flex-col w-full flex-1 items-start mt-1  mb-[6rem]">
         <div className="relative">
           <p className="lg:text-[68px] text-[56px] max-w-[450px] text-white tracking-wider leading-[74px]">

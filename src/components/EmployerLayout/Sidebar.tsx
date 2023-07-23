@@ -25,7 +25,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
     6: <GoDashboard className="md:text-base text-xl" />,
   };
   return (
-    <div className="md:w-[230px] w-[80px] bg-[#0a0a0a] h-[100vh] flex flex-col justify-between">
+    <div className="lg:w-[230px] md:w-[180px] w-[80px] bg-[#0a0a0a] h-[100vh] flex flex-col justify-between">
       <div>
         <Link href="/">
           <p className=" bg-clip-text text-transparent bg-gradient-to-r from-green-500 via-green-300 to-orange-600 md:text-2xl md:pl-4 pl-2 font-bold mt-[1.6rem]">
@@ -53,14 +53,14 @@ const Sidebar: React.FC<SidebarProps> = () => {
           ))}
         </div>
       </div>
-      <div className=" bg-gradient-to-b to-transparent from-green-700/50  flex-col rounded-t-[10px] gap-3 items-center mx-2 pt-3 w-[190px] md:flex hidden">
+      <div className=" bg-gradient-to-b to-transparent from-green-700/50  flex-col rounded-t-[10px] gap-3 items-center mx-auto pt-3 w-[90%] md:flex hidden">
         <div className="flex flex-col gap-3 items-center px-4">
-          <p className="text-[12px] text-white ">
+          <p className="text-[12px] text-white text-center">
             Have question about job or permissions?
           </p>
           <Link
             href="#"
-            className="bg-gray-200 text-green-500 py-[6px] mb-6 px-3 text-[12px] rounded-full w-full"
+            className="bg-gray-200 text-green-500 py-[6px] mb-6  text-[12px] text-center rounded-full w-full"
           >
             Visit Our Help Center
           </Link>
