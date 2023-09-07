@@ -26,9 +26,6 @@ const JobCard: React.FC<JobCardProps> = ({
   handleJobModel,
 }) => {
   const { data: savedJobs, isLoading } = useQuery("saved", getSavedJobs);
-  const saveJob = Array.isArray(savedJobs)
-    ? savedJobs?.find((saveJob: any) => saveJob._id === Job._id)
-    : {};
 
   console.log(Job);
   return (
@@ -36,7 +33,7 @@ const JobCard: React.FC<JobCardProps> = ({
       <div
         className="flex gap-3 cursor-pointer group"
         onClick={() => {
-          handleCompanyModel(Job?.CId, Job?._id);
+          handleCompanyModel(Job?.CId ?? "", Job?._id);
         }}
       >
         {Job?.Logo ? (
@@ -45,7 +42,7 @@ const JobCard: React.FC<JobCardProps> = ({
               <img
                 loading="lazy"
                 className=" h-full w-full object-cover rounded-md"
-                src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${Job.Logo}`}
+                src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${Job?.Logo}`}
                 alt=""
               />
             </div>
@@ -64,7 +61,7 @@ const JobCard: React.FC<JobCardProps> = ({
           <p className=" text-gray-700 text-[14px]">{Job?.CompanySnippet}</p>
           <div className="flex text-neutral-400 font-semibold items-center gap-1 uppercase text-[11px]">
             <IoPeople />
-            <p>{Job.CompanySize.split(" to ").join("-")} Employees</p>
+            <p>{Job?.CompanySize.split(" to ").join("-")} Employees</p>
           </div>
         </div>
 
@@ -78,7 +75,7 @@ const JobCard: React.FC<JobCardProps> = ({
         <div className=" border border-gray-200 p-3 flex md:flex-row flex-col justify-between rounded-[4px]">
           <div
             className="flex md:flex-row flex-col flex-1 flex-wrap gap-[2px]  cursor-pointer text-[14px]"
-            onClick={() => handleJobModel(Job?.CId, Job?._id)}
+            onClick={() => handleJobModel(Job?.CId ?? "", Job?._id)}
           >
             <div className=" flex md:items-center md:gap-2 gap-1 md:flex-row flex-col">
               <p className=" capitalize text-[15px] font-black  ">
@@ -135,7 +132,7 @@ const JobCard: React.FC<JobCardProps> = ({
               </button>
               <button
                 className="px-2 py-2 bg-black text-white rounded-[4px] md:w-max w-full hover:bg-blue-800 "
-                onClick={() => handleJobModel(Job?.CId, Job?._id)}
+                onClick={() => handleJobModel(Job?.CId ?? "", Job?._id)}
               >
                 Learn more
               </button>
