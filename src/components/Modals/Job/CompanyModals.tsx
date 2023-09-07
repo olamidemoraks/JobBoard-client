@@ -98,7 +98,7 @@ const CompanyModals: React.FC<CompanyModalsProps> = ({
       <div className=" border border-gray-200 p-3 flex md:flex-row flex-col justify-between rounded-[5px] ">
         <div
           className="flex flex-col flex-1 flex-wrap gap-[2px]  cursor-pointer text-[14px]"
-          onClick={() => handleJobModel(Job!.CId, Job!._id)}
+          onClick={() => handleJobModel(Job!.CId ?? "", Job!._id)}
         >
           <div>
             <p className=" capitalize text-[15px] font-black md:mr-6 md:mb-0 mb-2">
@@ -154,7 +154,7 @@ const CompanyModals: React.FC<CompanyModalsProps> = ({
             </button>
             <button
               className="px-2 py-2 bg-black text-white rounded-[4px] md:w-max w-full"
-              onClick={() => handleJobModel(Job!.CId, Job!._id)}
+              onClick={() => handleJobModel(Job?.CId ?? "", Job!._id)}
             >
               Learn more
             </button>
