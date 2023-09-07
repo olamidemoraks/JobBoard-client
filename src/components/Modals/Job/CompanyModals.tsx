@@ -22,7 +22,7 @@ import {
 } from "@chakra-ui/react";
 import moment from "moment";
 import React, { useState } from "react";
-import { BsDot } from "react-icons/bs";
+import { BsBuildings, BsDot } from "react-icons/bs";
 import {
   HiBookmark,
   HiChevronDown,
@@ -184,14 +184,24 @@ const CompanyModals: React.FC<CompanyModalsProps> = ({
       <ModalContent bg="white">
         <ModalHeader shadow="lg">
           <div className="flex gap-3 cursor-pointer">
-            <div className=" h-12 w-12 rounded-md">
-              <img
-                loading="lazy"
-                className=" h-full w-full object-cover rounded-md"
-                src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${company?.Logo}`}
-                alt=""
-              />
-            </div>
+            {company?.Logo ? (
+              <>
+                <div className=" h-12 w-12 rounded-md">
+                  <img
+                    loading="lazy"
+                    className=" h-full w-full object-cover rounded-md"
+                    src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${company.Logo}`}
+                    alt=""
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                <div className=" h-12 w-12 rounded-md bg-gray-400 flex items-center justify-center">
+                  <BsBuildings className=" text-white h-1/2 w-1/2" />
+                </div>
+              </>
+            )}
             <div className="flex flex-col gap-1 w-[90%]">
               <p className=" font-black text-[17px]">{company?.CompanyName}</p>
               <p className=" text-gray-700 text-[14px]">

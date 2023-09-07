@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
+import { BsBuildings } from "react-icons/bs";
 import { HiCloudUpload, HiRefresh } from "react-icons/hi";
 import { IoPersonOutline } from "react-icons/io5";
 import { useMutation, useQuery, useQueryClient } from "react-query";
@@ -96,14 +97,24 @@ const ApplyJobModal: React.FC<ApplyJobModalProps> = ({
             <p className=" font-semibold text-gray-400 text-sm">APPLY TO</p>
             <div className="flex flex-col gap-2 ">
               <div className="flex gap-2">
-                <div className=" h-8 w-8 rounded-md">
-                  <img
-                    loading="lazy"
-                    className=" h-full w-full object-cover rounded-md"
-                    src="/images/female.jpg"
-                    alt=""
-                  />
-                </div>
+                {Job?.CompanyLogo ? (
+                  <>
+                    <div className=" h-8 w-8 rounded-md">
+                      <img
+                        loading="lazy"
+                        className=" h-full w-full object-cover rounded-md"
+                        src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${Job.CompanyLogo}`}
+                        alt=""
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className=" h-8 w-8 rounded-md bg-gray-400 flex items-center justify-center">
+                      <BsBuildings className=" text-white h-1/2 w-1/2" />
+                    </div>
+                  </>
+                )}
                 <Link
                   href=""
                   className=" text-blue-600 font-semibold hover:underline "

@@ -88,10 +88,10 @@ export interface Company {
 
 export interface Job {
   _id: string;
-  CId: string;
-  UId: string;
-  saveId: string;
-  Contact: string;
+  CId?: string;
+  UId?: string;
+  saveId?: string;
+  Contact?: string;
   Title: string;
   Description: string;
   CompanyName: string;

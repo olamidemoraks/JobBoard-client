@@ -22,8 +22,8 @@ const Job: React.FC = () => {
       return getJobs(company?._id);
     },
     {
-      refetchOnWindowFocus: true,
       enabled: !!company?._id,
+      refetchOnMount: true,
     }
   );
 

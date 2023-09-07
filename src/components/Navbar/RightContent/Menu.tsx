@@ -1,6 +1,6 @@
-import React from "react";
-import { HiMenuAlt2, HiUser } from "react-icons/hi";
-import { AiOutlineRight, AiOutlineUser } from "react-icons/ai";
+import React, { useState, useEffect } from "react";
+import { HiMenuAlt2 } from "react-icons/hi";
+import { AiOutlineRight } from "react-icons/ai";
 import {
   MenuButton,
   MenuList,
@@ -18,26 +18,38 @@ import { useRouter } from "next/router";
 import { useAppDispatch } from "@/app/hooks";
 import { logout } from "@/feature/auth/authSlice";
 import Link from "next/link";
-import { useMutation, useQueryClient } from "react-query";
+import { useQueryClient } from "react-query";
 import useProfile from "@/hooks/useProfile";
 import { useLogoutMutation } from "@/feature/auth/authApiSlice";
-import { Logout } from "@/app/apiQuery";
 
 const Menu: React.FC<MenuProps> = ({ user }) => {
   const queryClient = useQueryClient();
   const router = useRouter();
   const location = router.pathname;
+  const [loggedOut, setLoggedOut] = useState(false);
+  console.log("Logged out", loggedOut);
 
-  const [sendLogout] = useLogoutMutation();
-
-  const { email, isExpired } = useProfile();
+  const { email } = useProfile();
   const dispatch = useAppDispatch();
-  const handleLogout = async () => {
-    dispatch(logout({}));
-    googleLogout();
-    router.push("/auth");
-    queryClient.clear();
+
+  const handleLogout = () => {
+    // googleLogout();
+    setLoggedOut(true);
+    // router.push("/auth");
+    // dispatch(logout({}));
   };
+
+  useEffect(() => {
+    if (loggedOut) {
+      router.push("/auth");
+      dispatch(logout({}));
+      setTimeout(() => {
+        queryClient.invalidateQueries();
+        console.log("Logged out");
+      }, 1000);
+      setLoggedOut(false);
+    }
+  }, [loggedOut]);
   return (
     <ChakraMenu>
       <MenuButton
@@ -188,7 +200,10 @@ const Menu: React.FC<MenuProps> = ({ user }) => {
               _hover={{ bg: "gray.200" }}
               p="11px 15px"
             >
-              <p className=" font-bold bg-transparent"> Post a Job </p>
+              <p className=" font-bold bg-transparent">
+                {" "}
+                Continue as Employer{" "}
+              </p>
               <Icon as={AiOutlineRight} bg="transparent" />
             </Flex>
           </Link>

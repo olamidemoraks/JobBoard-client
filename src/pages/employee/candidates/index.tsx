@@ -9,7 +9,7 @@ type CandidatesProps = {};
 
 const Candidates: React.FC<CandidatesProps> = () => {
   const { data, isLoading } = useQuery("company", getCompany, {
-    refetchOnWindowFocus: false,
+    refetchOnMount: true,
   });
 
   return (

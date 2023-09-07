@@ -39,6 +39,7 @@ import ApplyJobModal from "./ApplyJobModal";
 import moment from "moment";
 import "react-quill/dist/quill.bubble.css";
 import dynamic from "next/dynamic";
+import { BsBuildings } from "react-icons/bs";
 
 const QuillNoSSRWrapper = dynamic(import("react-quill"), {
   ssr: false,
@@ -131,14 +132,24 @@ const JobModal: React.FC<JobModalProps> = ({
         <p className="mb-3 font-black">About {company?.CompanyName}</p>
         <div className="p-4  rounded-[4px] bg-white">
           <div className="flex gap-3 cursor-pointer">
-            <div className="sm:h-12 sm:w-12 h-8 w-8 rounded-md">
-              <img
-                loading="lazy"
-                className=" h-full w-full object-cover rounded-md"
-                src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${company?.Logo}`}
-                alt=""
-              />
-            </div>
+            {company?.Logo ? (
+              <>
+                <div className=" h-12 w-12 rounded-md">
+                  <img
+                    loading="lazy"
+                    className=" h-full w-full object-cover rounded-md"
+                    src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${company.Logo}`}
+                    alt=""
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                <div className=" h-12 w-12 rounded-md bg-gray-400 flex items-center justify-center">
+                  <BsBuildings className=" text-white h-1/2 w-1/2" />
+                </div>
+              </>
+            )}
             <div className="flex flex-col flex-1">
               <p className=" font-black text-[17px]">{company?.CompanyName}</p>
               <p className=" text-gray-700 text-[14px]">
@@ -244,14 +255,24 @@ const JobModal: React.FC<JobModalProps> = ({
 
           <div className="flex justify-between w-full">
             <div className="flex gap-3 cursor-pointer">
-              <div className=" h-12 w-12 rounded-md">
-                <img
-                  loading="lazy"
-                  className=" h-full w-full object-cover rounded-md"
-                  src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${company?.Logo}`}
-                  alt=""
-                />
-              </div>
+              {Job?.CompanyLogo ? (
+                <>
+                  <div className=" h-12 w-12 rounded-md">
+                    <img
+                      loading="lazy"
+                      className=" h-full w-full object-cover rounded-md"
+                      src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${Job.CompanyLogo}`}
+                      alt=""
+                    />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className=" h-12 w-12 rounded-md bg-gray-400 flex items-center justify-center">
+                    <BsBuildings className=" text-white h-1/2 w-1/2" />
+                  </div>
+                </>
+              )}
               <div className="flex flex-col w-[90%]  flex-1">
                 <p className="font-black text-[17px]">{Job?.Title}</p>
                 <p className=" text-sm text-green-800">
@@ -319,14 +340,24 @@ const JobModal: React.FC<JobModalProps> = ({
               <div className="flex flex-col gap-2">
                 <p className=" font-black">Company</p>
                 <div className="flex gap-2">
-                  <div className=" h-8 w-8 rounded-md">
-                    <img
-                      loading="lazy"
-                      className=" h-full w-full object-cover rounded-md"
-                      src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${company?.Logo}`}
-                      alt=""
-                    />
-                  </div>
+                  {company?.Logo ? (
+                    <>
+                      <div className=" h-8 w-8 rounded-md">
+                        <img
+                          loading="lazy"
+                          className=" h-full w-full object-cover rounded-md"
+                          src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${company.Logo}`}
+                          alt=""
+                        />
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className=" h-8 w-8 rounded-md bg-gray-400 flex items-center justify-center">
+                        <BsBuildings className=" text-white h-1/2 w-1/2" />
+                      </div>
+                    </>
+                  )}
                   <p className="text-sm">{Job?.CompanyName}</p>
                 </div>
               </div>

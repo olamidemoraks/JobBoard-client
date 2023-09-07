@@ -43,6 +43,7 @@ const EditCompanyProfile: React.FC<EditCompanyProfileProps> = () => {
     onSettled: () => {
       queryClient.invalidateQueries("company");
     },
+    refetchOnMount: true,
   });
 
   useEffect(() => {

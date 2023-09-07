@@ -113,7 +113,7 @@ const Auth: React.FC = () => {
     <div className="flex items-center h-[100vh] flex-col  relative pt-[5rem] bg-gray-200">
       <Logo />
       <Toaster position="top-center" />
-      <div className=" border bg-white border-gray-300  w-[450px] rounded-md p-8 mt-5 flex gap-4 flex-col shadow-md">
+      <div className=" border bg-white border-gray-300 sm:w-[450px] w-[90%] rounded-md sm:p-8 p-5 mt-5 flex gap-4 flex-col shadow-md">
         {/* <h2 className=" font-semibold text-[20px] text-gray-600 leading-3">
           Ready to take the next step?
         </h2> */}
@@ -122,7 +122,7 @@ const Auth: React.FC = () => {
             Create an account
           </p>
         ) : (
-          <p className=" font-bold text-[22px] text-gray-700 text-center">
+          <p className=" font-bold text-lg text-gray-700 text-center ">
             Sign in
           </p>
         )}
@@ -170,11 +170,11 @@ const Auth: React.FC = () => {
                 />
               )}
               {isSignup && (
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 w-full">
                   <p className=" font-semibold">Account Type</p>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 w-full">
                     <p
-                      className={`hover:underline cursor-pointer text-dark-green ${
+                      className={`hover:underline p-3 border border-gray-400 rounded-lg text-sm cursor-pointer text-dark-green w-full ${
                         account === "seeker" ? "underline" : "no-underline"
                       } `}
                       onClick={() => {
@@ -193,9 +193,8 @@ const Auth: React.FC = () => {
                       onClick={handleChange}
                     />
 
-                    <span className=" text-lg">|</span>
                     <p
-                      className={`hover:underline cursor-pointer text-dark-green ${
+                      className={`hover:underline p-3 border border-gray-400 rounded-lg text-sm cursor-pointer text-dark-green w-full ${
                         account === "employer" ? "underline" : "no-underline"
                       } `}
                       onClick={() => {

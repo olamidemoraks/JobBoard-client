@@ -1,5 +1,6 @@
 import { getProfile } from "@/app/apiQuery";
 import AuthRoute from "@/components/Layout/AuthRoute";
+import Image from "next/image";
 import AddProfile from "@/components/NoProfileBackup/AddProfile";
 import ProfileLoading from "@/components/Utils/ProfileLoading";
 import UploadButton from "@/components/Utils/UploadButton";
@@ -36,7 +37,6 @@ const Profile: React.FC<ProfileProps> = () => {
         queryClient.setQueriesData("profile", emptyResponse);
       }
     },
-    refetchOnWindowFocus: false,
   });
 
   const [selectFile, setSelectFile] = useState<any>();
@@ -92,11 +92,12 @@ const Profile: React.FC<ProfileProps> = () => {
           <div className="md:h-[220px] md:w-[220px] h-[180px] w-[180px] bg-white p-3 rounded-md -mt-12 mb-10 mx-auto  -top-10 z-0 shadow-sm cursor-pointer relative">
             {data.Photo ? (
               <>
-                <img
+                <Image
                   loading="lazy"
                   className=" h-full w-full object-cover"
                   src={`${process.env.NEXT_PUBLIC_BASEURL}/profile/${data.Photo}`}
                   alt="profile"
+                  fill
                 />
                 <div
                   className="absolute bottom-0 right-0 p-2 bg-gray-400 cursor-pointer z-10"

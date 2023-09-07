@@ -23,8 +23,8 @@ const index: React.FC<indexProps> = () => {
     {
       refetchInterval: 500 * 1000,
       refetchOnMount: true,
-      refetchOnReconnect: true,
-      refetchOnWindowFocus: true,
+      // refetchOnReconnect: true,
+      // refetchOnWindowFocus: true,
       enabled: !!data,
     }
   );

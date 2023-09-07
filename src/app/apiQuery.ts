@@ -118,6 +118,7 @@ export const updateJob = async ({ values, id }: any) => {
     return res.json();
   } catch (error) {
     console.log(error);
+    return error;
   }
 };
 

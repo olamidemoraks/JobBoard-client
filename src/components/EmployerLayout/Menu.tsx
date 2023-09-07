@@ -24,10 +24,10 @@ const Menu: React.FC = () => {
   const location = router.pathname;
 
   const dispatch = useAppDispatch();
-  const handleLogout = () => {
-    googleLogout();
+  const handleLogout = async () => {
+    // googleLogout();
     router.push("/auth");
-    queryClient.removeQueries();
+    queryClient.clear()
     dispatch(logout({}));
   };
   return (
