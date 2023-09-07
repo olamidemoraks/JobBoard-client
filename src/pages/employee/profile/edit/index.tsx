@@ -39,11 +39,10 @@ const EditCompanyProfile: React.FC<EditCompanyProfileProps> = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { data: company, isLoading } = useQuery<Company>("company", getCompany);
-  const mutates = useMutation(updateCompany, {
+  const mutates = useMutation("", updateCompany, {
     onSettled: () => {
       queryClient.invalidateQueries("company");
     },
-    refetchOnMount: true,
   });
 
   useEffect(() => {
@@ -67,7 +66,7 @@ const EditCompanyProfile: React.FC<EditCompanyProfileProps> = () => {
     );
   }
   const handleSubmit = (values: any) => {
-    mutates.mutate({ data: { ...values }, id: company?._id });
+    mutates.mutateAsync({ data: { ...values }, id: company?._id });
   };
   return (
     <div className="my-4">
