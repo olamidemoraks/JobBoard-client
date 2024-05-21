@@ -16,11 +16,11 @@ const RightContent: React.FC<RightContentProps> = ({ user }) => {
   const router = useRouter();
   const location = router.pathname;
   return (
-    <div className="flex gap-[2rem] w-full">
+    <div className="flex gap-[10px] w-full">
       <div
         className={`${
           location === "/" ? "text-white" : "text-gray-700"
-        }   md:flex hidden gap-[2rem]  items-center flex-1`}
+        }   md:flex hidden gap-[10px]  items-center flex-1`}
       >
         <Link
           className=" px-2 flex items-center transition duration-200 hover:underline"

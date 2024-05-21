@@ -24,7 +24,7 @@ const Navbar: React.FC<NavbarProps> = () => {
         borderBottom={location !== "/" ? "1px" : "0"}
         borderBottomColor={"gray.300"}
       >
-        <Flex w="80%" alignItems={"center"} justify="space-between">
+        <Flex w={"90%"} alignItems={"center"} justify="space-between">
           <Stack direction="row" spacing="2rem" align="center">
             <p
               className={`${

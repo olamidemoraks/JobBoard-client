@@ -89,15 +89,14 @@ const Profile: React.FC<ProfileProps> = () => {
       <div className="w-full max-w-[800px] relative  mb-4 ">
         <div className=" bg-gradient-to-r from-blue-200 to-indigo-200 h-[100px] w-full z-0 " />
         <div className="flex md:flex-row flex-col gap-2 z-20 mx-5 md:justify-start justify-center  md:mb-4 mb-7">
-          <div className="md:h-[220px] md:w-[220px] h-[180px] w-[180px] bg-white p-3 rounded-md -mt-12 mb-10 mx-auto  -top-10 z-0 shadow-sm cursor-pointer relative">
+          <div className="md:h-[220px] md:w-[220px] h-[180px] w-[180px] bg-white  p-3 rounded-md -mt-12 mb-10 mx-auto  -top-10 z-0 shadow-sm cursor-pointer relative">
             {data.Photo ? (
               <>
-                <Image
+                <img
                   loading="lazy"
-                  className=" h-full w-full object-cover"
+                  className=" h-full w-full object-cover rounded"
                   src={`${process.env.NEXT_PUBLIC_BASEURL}/profile/${data.Photo}`}
                   alt="profile"
-                  fill
                 />
                 <div
                   className="absolute bottom-0 right-0 p-2 bg-gray-400 cursor-pointer z-10"
@@ -117,7 +116,7 @@ const Profile: React.FC<ProfileProps> = () => {
               </>
             )}
             {selectFile && (
-              <div className="flex items-center">
+              <div className="flex items-center ">
                 <UploadButton handleSubmitImage={handleSubmitImage} />
                 <div className=" py-2 px-2 bg-red-400 text-white hover:bg-red-500 flex-[0.5]">
                   <HiX

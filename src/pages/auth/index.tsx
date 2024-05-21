@@ -77,7 +77,7 @@ const Auth: React.FC = () => {
         })
       );
       if (values.AccountType === "seeker") {
-        router.push("/jobs");
+        router.push("/profile/build/name");
       } else if (values.AccountType === "employer") {
         router.push("/employee-setup");
       }
@@ -174,8 +174,10 @@ const Auth: React.FC = () => {
                   <p className=" font-semibold">Account Type</p>
                   <div className="flex gap-2 w-full">
                     <p
-                      className={`hover:underline p-3 border border-gray-400 rounded-lg text-sm cursor-pointer text-dark-green w-full ${
-                        account === "seeker" ? "underline" : "no-underline"
+                      className={`hover:underline p-3 border rounded-lg text-sm cursor-pointer text-dark-green w-full ${
+                        account === "seeker"
+                          ? "underline  border-emerald-400"
+                          : "no-underline   border-gray-400"
                       } `}
                       onClick={() => {
                         seekerRef.current?.click();
@@ -194,8 +196,10 @@ const Auth: React.FC = () => {
                     />
 
                     <p
-                      className={`hover:underline p-3 border border-gray-400 rounded-lg text-sm cursor-pointer text-dark-green w-full ${
-                        account === "employer" ? "underline" : "no-underline"
+                      className={`hover:underline p-3 border rounded-lg text-sm cursor-pointer text-dark-green w-full ${
+                        account === "employer"
+                          ? "underline border-emerald-400"
+                          : "no-underline  border-gray-400"
                       } `}
                       onClick={() => {
                         employerRef.current?.click();

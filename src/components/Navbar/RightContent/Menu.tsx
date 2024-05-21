@@ -18,15 +18,23 @@ import { useRouter } from "next/router";
 import { useAppDispatch } from "@/app/hooks";
 import { logout } from "@/feature/auth/authSlice";
 import Link from "next/link";
-import { useQueryClient } from "react-query";
+import { useQueryClient, useQuery } from "react-query";
 import useProfile from "@/hooks/useProfile";
 import { useLogoutMutation } from "@/feature/auth/authApiSlice";
+import { getProfile } from "@/app/apiQuery";
 
 const Menu: React.FC<MenuProps> = ({ user }) => {
   const queryClient = useQueryClient();
   const router = useRouter();
   const location = router.pathname;
   const [loggedOut, setLoggedOut] = useState(false);
+  const { data, isLoading } = useQuery<Profile>("profile", getProfile, {
+    onSuccess: (data: any) => {
+      if (data?.isError === true) {
+        queryClient.setQueriesData("profile", emptyResponse);
+      }
+    },
+  });
   console.log("Logged out", loggedOut);
 
   const { email } = useProfile();
@@ -53,7 +61,6 @@ const Menu: React.FC<MenuProps> = ({ user }) => {
   return (
     <ChakraMenu>
       <MenuButton
-        ml={1}
         bg={"transparent"}
         display="flex"
         alignItems="center"
@@ -61,13 +68,11 @@ const Menu: React.FC<MenuProps> = ({ user }) => {
         as={Button}
         _hover={{ bg: "transparent" }}
         _active={{ bg: "transparent" }}
-        rightIcon={
-          <HiMenuAlt2
-            color={location === "/" ? "#27d2a5" : "#000"}
-            size="20px"
-          />
-        }
-      />
+      >
+        <div className="w-[2.4rem] h-[2.4rem] text-lg rounded-xl uppercase border-2 border-emerald-600 bg-indigo-500 text-white flex items-center justify-center">
+          {data?.FName[0]}
+        </div>
+      </MenuButton>
       <MenuList shadow="md" bg={"white"} width="350px" zIndex={20}>
         {user && (
           <MenuItem
@@ -86,12 +91,14 @@ const Menu: React.FC<MenuProps> = ({ user }) => {
                 _hover={{ bg: "gray.200" }}
                 p="11px 15px"
               >
-                <div className="h-9 w-9 bg-indigo-500 rounded-full flex items-center justify-center text-white capitalize">
-                  {email?.slice(0, 1)}
+                <div className="w-[2.4rem] h-[2.4rem] text-lg rounded-xl uppercase border-2 border-emerald-600 bg-indigo-500 text-white flex items-center justify-center">
+                  {data?.FName[0]}
                 </div>
                 <div className="flex flex-col">
                   <p className=" font-semibold bg-transparent">{email}</p>
-                  <p className=" text-sm">Ready for interview</p>
+                  <p className=" text-zinc-600">
+                    {data?.FName} {data?.LName}
+                  </p>
                 </div>
               </Flex>
             </Link>

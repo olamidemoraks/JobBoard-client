@@ -108,7 +108,7 @@ const JobCard: React.FC<JobCardProps> = ({
                     className="text-[12px] text-gray-600 bg-gray-200 rounded-[9px] px-2"
                     key={idx}
                   >
-                    {skill}
+                    {skill.split("AND").join(", ")}
                   </p>
                 ))}
               </div>
@@ -141,8 +141,10 @@ const JobCard: React.FC<JobCardProps> = ({
               </p>
 
               {Job?.isRemote && <p className="text-black/80"> • Remote</p>}
-              {Job?.Address && (
-                <p className="text-black/80">• {Job?.Address}</p>
+              {(Job?.Address || Job?.Location) && (
+                <p className="text-black/80">
+                  • {Job?.Location} {Job?.Address}
+                </p>
               )}
             </div>
           </div>
