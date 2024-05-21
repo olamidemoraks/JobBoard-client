@@ -97,13 +97,13 @@ const ApplyJobModal: React.FC<ApplyJobModalProps> = ({
             <p className=" font-semibold text-gray-400 text-sm">APPLY TO</p>
             <div className="flex flex-col gap-2 ">
               <div className="flex gap-2">
-                {Job?.CompanyLogo ? (
+                {Job?.Logo ? (
                   <>
                     <div className=" h-8 w-8 rounded-md">
                       <img
                         loading="lazy"
                         className=" h-full w-full object-cover rounded-md"
-                        src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${Job.CompanyLogo}`}
+                        src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${Job?.Logo}`}
                         alt=""
                       />
                     </div>
