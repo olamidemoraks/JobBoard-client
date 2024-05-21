@@ -40,6 +40,7 @@ import moment from "moment";
 import "react-quill/dist/quill.bubble.css";
 import dynamic from "next/dynamic";
 import { BsBuildings } from "react-icons/bs";
+import Link from "next/link";
 
 const QuillNoSSRWrapper = dynamic(import("react-quill"), {
   ssr: false,
@@ -132,16 +133,27 @@ const JobModal: React.FC<JobModalProps> = ({
         <p className="mb-3 font-black">About {company?.CompanyName}</p>
         <div className="p-4  rounded-[4px] bg-white">
           <div className="flex gap-3 cursor-pointer">
-            {company?.Logo ? (
+            {company?.Logo || Job?.Logo ? (
               <>
-                <div className=" h-12 w-12 rounded-md">
-                  <img
-                    loading="lazy"
-                    className=" h-full w-full object-cover rounded-md"
-                    src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${company.Logo}`}
-                    alt=""
-                  />
-                </div>
+                {Job?.Logo ? (
+                  <div className=" h-12 w-12 rounded-md">
+                    <img
+                      loading="lazy"
+                      className=" h-full w-full object-cover rounded-md"
+                      src={`${Job?.Logo}`}
+                      alt=""
+                    />
+                  </div>
+                ) : (
+                  <div className=" h-12 w-12 rounded-md">
+                    <img
+                      loading="lazy"
+                      className=" h-full w-full object-cover rounded-md"
+                      src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${company?.Logo}`}
+                      alt=""
+                    />
+                  </div>
+                )}
               </>
             ) : (
               <>
@@ -151,7 +163,9 @@ const JobModal: React.FC<JobModalProps> = ({
               </>
             )}
             <div className="flex flex-col flex-1">
-              <p className=" font-black text-[17px]">{company?.CompanyName}</p>
+              <p className=" font-black text-[17px]">
+                {company?.CompanyName ?? Job?.CompanyName}
+              </p>
               <p className=" text-gray-700 text-[14px]">
                 {company?.CompanySnippet}
               </p>
@@ -161,20 +175,23 @@ const JobModal: React.FC<JobModalProps> = ({
             <div className="flex-1 flex flex-col ">
               <div className="flex gap-1 bg-green-600/20 text-green-900 p-[3px] px-2 rounded-[30px] text-xs items-center uppercase w-max mb-2">
                 <IoCheckmarkCircle className=" text-base" />{" "}
-                <p>{company?.Status}</p>
+                <p>{company?.Status ?? "Actively Hiring"}</p>
               </div>
               <div className="">{company?.CompanyDesc}</div>
             </div>
             <div className="flex-[0.3] border border-gray-200 rounded-[7px] hidden px-4 py-2 gap-[10px] flex-col md:flex">
               <div className="flex flex-col gap-1">
                 <p className="font-black">Website</p>
-                <a className=" text-blue-700 text-sm" href={company?.Url}>
-                  {company?.Url}
+                <a
+                  className=" text-blue-700 text-sm"
+                  href={company?.Url ?? Job?.Url}
+                >
+                  {company?.Url ?? Job?.Url}
                 </a>
               </div>
               <div className="flex flex-col gap-1">
                 <p className=" font-black">Location</p>
-                <p className="text-sm">{company?.Location}</p>
+                <p className="text-sm">{company?.Location ?? Job?.Location}</p>
               </div>
               <div className="flex flex-col gap-1">
                 <p className=" font-black">Company size</p>
@@ -193,13 +210,19 @@ const JobModal: React.FC<JobModalProps> = ({
                 <div className="flex-[0.3] rounded-[7px] py-2 gap-[12px] flex-col flex mt-3">
                   <div className="flex flex-col gap-1">
                     <p className="font-black text-sm">Website</p>
-                    <a className=" text-blue-700 text-sm" href={company?.Url}>
-                      {company?.Url} chippyvibe.com
+                    <a
+                      className=" text-blue-700 text-sm"
+                      href={company?.Url ?? Job?.Url}
+                      target="_blank"
+                    >
+                      {company?.Url ?? Job?.Url}
                     </a>
                   </div>
                   <div className="flex flex-col gap-1">
                     <p className=" font-black text-sm">Location</p>
-                    <p className="text-sm">{company?.Location}</p>
+                    <p className="text-sm">
+                      {company?.Location ?? Job?.Location}
+                    </p>
                   </div>
                   <div className="flex flex-col gap-1">
                     <p className=" font-black text-sm">Company size</p>
@@ -209,20 +232,24 @@ const JobModal: React.FC<JobModalProps> = ({
               )}
             </div>
           </div>
-          <Divider />
+          {Job?.isFeatured ? null : (
+            <>
+              <Divider />
 
-          <div className=" flex flex-col gap-3 my-4">
-            <p className=" font-black">Founders</p>
-            <div className=" border border-gray-200 rounded-[5px] p-4 min-h-[100px] md:w-[500px] w-full flex justify-between items-start">
-              <div className="flex flex-col flex-1">
-                <p className=" font-bold text-sm"> {company?.Name}</p>
-                <p className=" text-sm">{company?.Title}</p>
+              <div className=" flex flex-col gap-3 my-4">
+                <p className=" font-black">Founders</p>
+                <div className=" border border-gray-200 rounded-[5px] p-4 min-h-[100px] md:w-[500px] w-full flex justify-between items-start">
+                  <div className="flex flex-col flex-1">
+                    <p className=" font-bold text-sm"> {company?.Name}</p>
+                    <p className=" text-sm">{company?.Title}</p>
+                  </div>
+                  <div className=" h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center">
+                    <IoPersonOutline color="#fff" />
+                  </div>
+                </div>
               </div>
-              <div className=" h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center">
-                <IoPersonOutline color="#fff" />
-              </div>
-            </div>
-          </div>
+            </>
+          )}
         </div>
       </div>
     );
@@ -255,16 +282,27 @@ const JobModal: React.FC<JobModalProps> = ({
 
           <div className="flex justify-between w-full">
             <div className="flex gap-3 cursor-pointer">
-              {Job?.CompanyLogo ? (
+              {company?.Logo || Job?.Logo ? (
                 <>
-                  <div className=" h-12 w-12 rounded-md">
-                    <img
-                      loading="lazy"
-                      className=" h-full w-full object-cover rounded-md"
-                      src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${Job.CompanyLogo}`}
-                      alt=""
-                    />
-                  </div>
+                  {Job?.Logo ? (
+                    <div className=" h-12 w-12 rounded-md">
+                      <img
+                        loading="lazy"
+                        className=" h-full w-full object-cover rounded-md"
+                        src={`${Job?.Logo}`}
+                        alt=""
+                      />
+                    </div>
+                  ) : (
+                    <div className=" h-12 w-12 rounded-md">
+                      <img
+                        loading="lazy"
+                        className=" h-full w-full object-cover rounded-md"
+                        src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${company?.Logo}`}
+                        alt=""
+                      />
+                    </div>
+                  )}
                 </>
               ) : (
                 <>
@@ -273,54 +311,45 @@ const JobModal: React.FC<JobModalProps> = ({
                   </div>
                 </>
               )}
-              <div className="flex flex-col w-[90%]  flex-1">
-                <p className="font-black text-[17px]">{Job?.Title}</p>
-                <p className=" text-sm text-green-800">
-                  {Job?.Applicants} applicants
+              <div className="flex flex-col flex-1">
+                <p className=" font-black text-[17px]">
+                  {company?.CompanyName ?? Job?.CompanyName}
                 </p>
-                <p className="text-gray-600 text-sm font-normal">
-                  {currency[Job?.currency ?? "USD"] === "N" ? (
-                    <span>&#8358;</span>
-                  ) : (
-                    currency[Job?.currency ?? "USD"]
-                  )}
-                  {Job?.PayMin?.toLocaleString()} -{" "}
-                  {currency[Job?.currency ?? "USD"] === "N" ? (
-                    <span>&#8358;</span>
-                  ) : (
-                    currency[Job?.currency ?? "USD"]
-                  )}
-                  {Job?.PayMax?.toLocaleString()}{" "}
-                  <span className=" text-sm">
-                    {frequently[Job?.frequency ?? "yr"]}
-                  </span>
+                <p className=" text-gray-700 text-[14px]">
+                  {company?.CompanySnippet}
                 </p>
-                {moment(Job?.Deadline).toISOString() <
-                  moment().toISOString() && (
-                  <p className="bg-red-600 text-white px-1 mt-2 text-xs text-center rounded-md font-light">
-                    Expired ${moment(Job?.Deadline).fromNow()}
-                  </p>
-                )}
               </div>
             </div>
             <div className="md:block hidden">
               <div className="flex gap-2 w-full justify-end md:w-max">
-                <button
-                  className="px-4 py-1 text-base  border-black border rounded-[4px] font-normal hover:border-blue-800 hover:text-blue-800"
-                  onClick={() => handleSaveOrUnsaveJob(Job!._id)}
-                >
-                  {isSaved ? (
-                    <HiBookmark className=" text-[18px] " />
-                  ) : (
-                    <HiOutlineBookmark className=" text-[18px] " />
-                  )}
-                </button>
-                <button
-                  className="px-4 py-1 font-normal bg-black text-gray-50 rounded-[4px] w-max text-base hover:bg-blue-800"
-                  onClick={handleApplyModal}
-                >
-                  {alreadyApplied ? "Applied" : "Apply"}
-                </button>
+                {!Job?.isFeatured && (
+                  <button
+                    className="px-4 py-1 text-base  border-black border rounded-[4px] font-normal hover:border-blue-800 hover:text-blue-800"
+                    onClick={() => handleSaveOrUnsaveJob(Job!._id)}
+                  >
+                    {isSaved ? (
+                      <HiBookmark className=" text-[18px] " />
+                    ) : (
+                      <HiOutlineBookmark className=" text-[18px] " />
+                    )}
+                  </button>
+                )}
+                {Job?.isFeatured ? (
+                  <Link
+                    className="px-4 py-1 font-normal bg-black text-gray-50 rounded-[4px] w-max text-base hover:bg-blue-800"
+                    target="_blank"
+                    href={Job?.ApplyLink}
+                  >
+                    Apply
+                  </Link>
+                ) : (
+                  <button
+                    className="px-4 py-1 font-normal bg-black text-gray-50 rounded-[4px] w-max text-base hover:bg-blue-800"
+                    onClick={handleApplyModal}
+                  >
+                    {alreadyApplied ? "Applied" : "Apply"}
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -329,27 +358,52 @@ const JobModal: React.FC<JobModalProps> = ({
           <div className="flex gap-4 my-9 md:flex-row flex-col px-7">
             <div className="flex-1 flex flex-col ">
               <p className=" font-black">Job Description</p>
-              <QuillNoSSRWrapper
-                value={Job?.Description}
-                readOnly={true}
-                theme={"bubble"}
-                className="min-h-[60vh] flex-1 mb-4"
-              />
+              <>
+                {Job?.isFeatured ? (
+                  <QuillNoSSRWrapper
+                    value={Job?.Description.replace(/\n/g, "<br>")}
+                    readOnly={true}
+                    theme={"bubble"}
+                    style={{
+                      fontSize: "1rem",
+                    }}
+                    className="min-h-[60vh] flex-1 mb-4 "
+                  />
+                ) : (
+                  <QuillNoSSRWrapper
+                    value={Job?.Description}
+                    readOnly={true}
+                    theme={"bubble"}
+                    className="min-h-[60vh] flex-1 mb-4"
+                  />
+                )}
+              </>
             </div>
             <div className="flex-[0.3] border border-gray-200 rounded-[7px]  p-3 gap-4 flex-col md:flex hidden">
               <div className="flex flex-col gap-2">
                 <p className=" font-black">Company</p>
-                <div className="flex gap-2">
-                  {company?.Logo ? (
+                <div className="flex gap-3 cursor-pointer">
+                  {company?.Logo || Job?.Logo ? (
                     <>
-                      <div className=" h-8 w-8 rounded-md">
-                        <img
-                          loading="lazy"
-                          className=" h-full w-full object-cover rounded-md"
-                          src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${company.Logo}`}
-                          alt=""
-                        />
-                      </div>
+                      {Job?.Logo ? (
+                        <div className=" h-8 w-8 rounded-md">
+                          <img
+                            loading="lazy"
+                            className=" h-full w-full object-cover rounded-md"
+                            src={`${Job?.Logo}`}
+                            alt=""
+                          />
+                        </div>
+                      ) : (
+                        <div className=" h-8 w-8 rounded-md">
+                          <img
+                            loading="lazy"
+                            className=" h-full w-full object-cover rounded-md"
+                            src={`${process.env.NEXT_PUBLIC_BASEURL}/company/${company?.Logo}`}
+                            alt=""
+                          />
+                        </div>
+                      )}
                     </>
                   ) : (
                     <>
@@ -358,7 +412,14 @@ const JobModal: React.FC<JobModalProps> = ({
                       </div>
                     </>
                   )}
-                  <p className="text-sm">{Job?.CompanyName}</p>
+                  <div className="flex flex-col flex-1">
+                    <p className=" font-black text-[17px]">
+                      {company?.CompanyName ?? Job?.CompanyName}
+                    </p>
+                    <p className=" text-gray-700 text-[14px]">
+                      {company?.CompanySnippet}
+                    </p>
+                  </div>
                 </div>
               </div>
               <div className="flex flex-col gap-2">
@@ -375,20 +436,22 @@ const JobModal: React.FC<JobModalProps> = ({
                   {Job?.isRemote ? "Yes" : "Not Remotely"}
                 </p>
               </div>
-              <div className="flex flex-col gap-2">
-                <p className=" font-black">Experience</p>
-                <p className="text-sm">{Job?.Experience}+ years</p>
-              </div>
+              {Job?.Experience && Job?.Experience === "0" ? (
+                <div className="flex flex-col gap-2">
+                  <p className=" font-black">Experience</p>
+                  <p className="text-sm">{Job?.Experience}+ years</p>
+                </div>
+              ) : null}
 
               <div className="flex flex-col gap-2">
                 <p className=" font-black">Skills</p>
                 <div className="flex flex-wrap gap-2">
-                  {Job?.Skills.map((value, idx) => (
+                  {Job?.Skills?.map((value, idx) => (
                     <p
                       className="bg-gray-200 text-[13px] rounded-full w-max px-2 py-[3px]"
                       key={idx}
                     >
-                      {value}
+                      {value == "UNAVAILABLE" ? "" : value}
                     </p>
                   ))}
                 </div>
@@ -398,7 +461,7 @@ const JobModal: React.FC<JobModalProps> = ({
                 <p className=" font-black">Benfits</p>
                 <ul className="flex gap-1 justify-start flex-wrap">
                   {Job?.Benefits?.map((benefit, idx) => (
-                    <li className="text-sm">{benefit},</li>
+                    <li className="text-sm">{benefit.split("_").join(" ")},</li>
                   ))}
                 </ul>
               </div>
@@ -450,7 +513,7 @@ const JobModal: React.FC<JobModalProps> = ({
                   <div className="flex flex-col gap-2">
                     <p className=" font-black text-sm">Skills</p>
                     <div className="flex flex-wrap gap-2">
-                      {Job?.Skills.map((value, idx) => (
+                      {Job?.Skills?.map((value, idx) => (
                         <p
                           className="bg-gray-200 text-[13px] rounded-full w-max px-2 py-[3px]"
                           key={idx}

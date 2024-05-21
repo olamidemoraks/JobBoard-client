@@ -158,7 +158,7 @@ const ApplyJobModal: React.FC<ApplyJobModalProps> = ({
               <div className="flex flex-col gap-2">
                 <p className=" text-gray-500 font-semibold">Skills</p>
                 <div className="flex flex-wrap gap-2">
-                  {Job?.Skills.map((value, idx) => (
+                  {Job?.Skills?.map((value, idx) => (
                     <p
                       className="bg-gray-200 text-[13px] rounded-full w-max px-2 py-[3px]"
                       key={idx}

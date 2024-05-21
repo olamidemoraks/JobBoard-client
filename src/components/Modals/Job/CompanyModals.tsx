@@ -105,7 +105,7 @@ const CompanyModals: React.FC<CompanyModalsProps> = ({
               {Job?.Title}
             </p>
             <div className="flex gap-3 flex-wrap">
-              {Job?.Skills.map((skill, idx) => (
+              {Job?.Skills?.map((skill, idx) => (
                 <p
                   key={idx}
                   className="text-[12px] text-gray-600 bg-gray-300 rounded-[9px] px-2"
@@ -115,25 +115,35 @@ const CompanyModals: React.FC<CompanyModalsProps> = ({
               ))}
             </div>
           </div>
-          <div className="flex  gap-[2px] items-center capitalize">
-            <p className="text-zink-400  text-[13px] font-semibold">
-              <span>{frequently[Job?.frequency ?? "mo"]}: </span>
-              {currency[Job?.currency ?? "USD"] === "N" ? (
-                <span>&#8358;</span>
-              ) : (
-                currency[Job?.currency ?? "USD"]
+          <div className="flex gap-[2px] md:flex-row flex-col md:items-center capitalize">
+            <p className="text-black/80 text-[13px] font-semibold">
+              {Job?.frequency && (
+                <span>{frequently[Job?.frequency] ?? Job?.frequency}: </span>
               )}
-              {Job?.PayMin.toLocaleString()}-{" "}
-              {currency[Job?.currency ?? "USD"] === "N" ? (
-                <span>&#8358;</span>
-              ) : (
-                currency[Job?.currency ?? "USD"]
+              {Job?.currency && (
+                <>
+                  {currency[Job?.currency] === "N" ? (
+                    <span>&#8358;</span>
+                  ) : (
+                    currency[Job?.currency]
+                  )}
+                </>
               )}
-              {Job?.PayMax.toLocaleString()}
+              {Job?.PayMax && Job?.PayMin ? (
+                <>
+                  {Job?.PayMin?.toLocaleString()} •
+                  {currency[Job?.currency] === "N" ? (
+                    <span>&#8358;</span>
+                  ) : (
+                    currency[Job?.currency]
+                  )}
+                  {Job?.PayMax?.toLocaleString()}
+                </>
+              ) : null}
             </p>
 
-            {Job?.isRemote && <p className="text-black/70">- Remote</p>}
-            {Job?.Address && <p className="text-black/70">- {Job.Address}</p>}
+            {Job?.isRemote && <p className="text-black/80"> • Remote</p>}
+            {Job?.Address && <p className="text-black/80">• {Job?.Address}</p>}
           </div>
         </div>
 
@@ -253,15 +263,12 @@ const CompanyModals: React.FC<CompanyModalsProps> = ({
                     <div className="flex flex-col gap-1">
                       <p className="font-black text-sm">Website</p>
                       <a className=" text-blue-700 text-sm" href={company?.Url}>
-                        {company?.Url} chippyvibe.com
+                        {company?.Url}
                       </a>
                     </div>
                     <div className="flex flex-col gap-1">
                       <p className=" font-black text-sm">Location</p>
-                      <p className="text-sm">
-                        {/* {company?.Location}   */}
-                        Cambridge
-                      </p>
+                      <p className="text-sm">{company?.Location}</p>
                     </div>
                     <div className="flex flex-col gap-1">
                       <p className=" font-black text-sm">Company size</p>

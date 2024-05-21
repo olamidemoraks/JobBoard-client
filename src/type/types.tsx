@@ -95,8 +95,11 @@ export interface Job {
   Title: string;
   Description: string;
   CompanyName: string;
-  CompanyLogo: string;
+  Logo: string;
   Location: string;
+  published: string;
+  ApplyLink: string;
+  Url?: string;
   Address: string;
   EmploymentType: string;
   Deadline: string;
@@ -111,6 +114,7 @@ export interface Job {
   frequency: "mo" | "yr" | "wk" | "day" | "hr";
   Skills: string[];
   Experience: string;
+  isFeatured: boolean;
   isActive: boolean;
   Applicants: number;
   createdAt: string;
