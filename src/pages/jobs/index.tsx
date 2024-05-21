@@ -9,7 +9,6 @@ import { getSavedJobs, getSeachJobs } from "@/app/apiQuery";
 import { Job } from "@/type/types";
 import Loader from "@/components/Utils/Loader";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
-import Featured from "@/components/Job/Featured";
 
 type JobsProps = {};
 
@@ -55,9 +54,6 @@ const Jobs: React.FC<JobsProps> = () => {
   }
   if (query.type === "hidden") {
     content = <Hidden />;
-  }
-  if (query.type === "featured") {
-    content = <Featured />;
   }
 
   return (
