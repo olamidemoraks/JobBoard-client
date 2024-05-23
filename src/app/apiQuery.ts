@@ -9,6 +9,14 @@ if (typeof window !== "undefined") {
 }
 
 export const getProfile = async (): Promise<any> => {
+  let token: string = "";
+
+  if (typeof window !== "undefined") {
+    const info = JSON.parse(localStorage.getItem("_profile") as string) ?? {
+      token: "",
+    };
+    token = info.token;
+  }
   try {
     const data = await fetch(`${baseUrl}/seeker`, {
       method: "GET",
@@ -140,7 +148,6 @@ export const deleteJob = async ({ id }: any) => {
 // Jobs route
 
 export const getSeachJobs = async (query: any) => {
-  console.log("query", query);
   const Title = query.Title ?? "";
   const Address = query.Address ?? "";
   const PayMin = query.PayMin ?? 0;
@@ -150,9 +157,10 @@ export const getSeachJobs = async (query: any) => {
   const Skills = query.Skills ?? "";
   const EmploymentType = query.EmploymentType ?? "";
   const isRemote = query.isRemote ?? "";
+  const page = query.page ?? 1;
   try {
     const res = await fetch(
-      `${baseUrl}/job/?Title=${Title}&Address=${Address}&PayMin[gte]=${PayMin}&PayMax[lte]=${PayMax}&Experience[gte]=${minExperience}&Experience[lte]=${maxExperience}&Skills=${Skills}&isRemote=${isRemote}&EmploymentType=${EmploymentType}`,
+      `${baseUrl}/job/?page=${page}&Title=${Title}&Address=${Address}&PayMin[gte]=${PayMin}&PayMax[lte]=${PayMax}&Experience[gte]=${minExperience}&Experience[lte]=${maxExperience}&Skills=${Skills}&isRemote=${isRemote}&EmploymentType=${EmploymentType}`,
       {
         method: "GET",
       }

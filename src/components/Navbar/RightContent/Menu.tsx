@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { HiMenuAlt2 } from "react-icons/hi";
-import { AiOutlineRight } from "react-icons/ai";
+import { AiOutlineRight, AiOutlineLogout } from "react-icons/ai";
 import {
   MenuButton,
   MenuList,
@@ -22,11 +22,13 @@ import { useQueryClient, useQuery } from "react-query";
 import useProfile from "@/hooks/useProfile";
 import { useLogoutMutation } from "@/feature/auth/authApiSlice";
 import { getProfile } from "@/app/apiQuery";
+import { Profile } from "@/type/types";
 
 const Menu: React.FC<MenuProps> = ({ user }) => {
   const queryClient = useQueryClient();
   const router = useRouter();
   const location = router.pathname;
+  const emptyResponse: any = [];
   const [loggedOut, setLoggedOut] = useState(false);
   const { data, isLoading } = useQuery<Profile>("profile", getProfile, {
     onSuccess: (data: any) => {
@@ -35,7 +37,6 @@ const Menu: React.FC<MenuProps> = ({ user }) => {
       }
     },
   });
-  console.log("Logged out", loggedOut);
 
   const { email } = useProfile();
   const dispatch = useAppDispatch();
@@ -69,30 +70,29 @@ const Menu: React.FC<MenuProps> = ({ user }) => {
         _hover={{ bg: "transparent" }}
         _active={{ bg: "transparent" }}
       >
-        <div className="w-[2.4rem] h-[2.4rem] text-lg rounded-xl uppercase border-2 border-emerald-600 bg-indigo-500 text-white flex items-center justify-center">
-          {data?.FName[0]}
+        <div className="w-[2.4rem] h-[2.4rem] text-lg rounded-xl uppercase border-2 border-emerald-600 bg-emerald-600  text-white flex items-center justify-center">
+          {data?.FName?.[0]}
         </div>
       </MenuButton>
-      <MenuList shadow="md" bg={"white"} width="350px" zIndex={20}>
+      <MenuList shadow="md" bg={"white"} minWidth="350px" p={"6px"} zIndex={20}>
         {user && (
           <MenuItem
             bg={"white"}
             _hover={{ bg: "gray.200", color: "black" }}
-            p="0"
             borderBottom="2px"
             borderColor="gray.200"
+            borderRadius={6}
             color="gray.600"
           >
             <Link href="/profile" className="w-full">
               <Flex
-                align={"center"}
+                align={"start"}
                 gap="8px"
                 w="100%"
                 _hover={{ bg: "gray.200" }}
-                p="11px 15px"
               >
-                <div className="w-[2.4rem] h-[2.4rem] text-lg rounded-xl uppercase border-2 border-emerald-600 bg-indigo-500 text-white flex items-center justify-center">
-                  {data?.FName[0]}
+                <div className="w-[2.4rem] h-[2.4rem] text-lg rounded-xl uppercase border-2 border-emerald-600 bg-emerald-600 text-white flex items-center justify-center">
+                  {data?.FName?.[0]}
                 </div>
                 <div className="flex flex-col">
                   <p className=" font-semibold bg-transparent">{email}</p>
@@ -108,9 +108,7 @@ const Menu: React.FC<MenuProps> = ({ user }) => {
           <MenuItem
             bg={"white"}
             _hover={{ bg: "gray.200", color: "black" }}
-            p="0"
-            borderBottom="2px"
-            borderColor="gray.200"
+            borderRadius={6}
             color="gray.600"
           >
             <Link href="/profile" className="w-full">
@@ -131,9 +129,7 @@ const Menu: React.FC<MenuProps> = ({ user }) => {
           <MenuItem
             bg={"white"}
             _hover={{ bg: "gray.200", color: "black" }}
-            p="0"
-            borderBottom="2px"
-            borderColor="gray.200"
+            borderRadius={6}
             color="gray.600"
           >
             <Link href="/auth" className="w-full">
@@ -153,9 +149,7 @@ const Menu: React.FC<MenuProps> = ({ user }) => {
         <MenuItem
           bg={"white"}
           _hover={{ bg: "gray.200", color: "black" }}
-          p="0"
-          borderBottom="2px"
-          borderColor="gray.200"
+          borderRadius={6}
           color="gray.600"
         >
           <Flex
@@ -173,9 +167,7 @@ const Menu: React.FC<MenuProps> = ({ user }) => {
         <MenuItem
           bg={"white"}
           _hover={{ bg: "gray.200", color: "black" }}
-          p="0"
-          borderBottom="2px"
-          borderColor="gray.200"
+          borderRadius={6}
           color="gray.600"
           //   borderBottom="2px"
           //   borderColor="gray.200"
@@ -194,9 +186,7 @@ const Menu: React.FC<MenuProps> = ({ user }) => {
         <MenuItem
           bg={"white"}
           _hover={{ bg: "gray.200", color: "black" }}
-          p="0"
-          borderBottom="2px"
-          borderColor="gray.200"
+          borderRadius={6}
           color="gray.600"
         >
           <Link href="/employee" className="w-full">
@@ -219,22 +209,23 @@ const Menu: React.FC<MenuProps> = ({ user }) => {
           <MenuItem
             bg={"white"}
             _hover={{ bg: "gray.200" }}
-            p="0"
+            borderRadius={6}
             borderTop="2px"
             borderColor="gray.200"
           >
             <Flex
               align={"center"}
-              justify="center"
+              justify={"center"}
+              gap={3}
               w="100%"
               mx="4px"
-              _hover={{ bg: "blue.100" }}
               p="11px 15px"
               onClick={handleLogout}
             >
               <p className="font-bold bg-transparent text-primary-dark ">
-                Sign Out
+                Log Out
               </p>
+              <AiOutlineLogout size={20} />
             </Flex>
           </MenuItem>
         )}

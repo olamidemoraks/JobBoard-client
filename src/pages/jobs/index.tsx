@@ -4,7 +4,7 @@ import SaveJob from "@/components/Job/SaveJob";
 import PageLayout from "@/components/Layout/PageLayout";
 import { useRouter } from "next/router";
 import { dehydrate, QueryClient, useQuery, useQueryClient } from "react-query";
-import React from "react";
+import React, { useEffect } from "react";
 import { getSavedJobs, getSeachJobs } from "@/app/apiQuery";
 import { Job } from "@/type/types";
 import Loader from "@/components/Utils/Loader";
@@ -19,9 +19,12 @@ const Jobs: React.FC<JobsProps> = () => {
   const emptyResponse: any = [];
 
   const { query } = router;
-  console.log(query);
 
-  const { data: Jobs, isLoading } = useQuery<Job[]>(
+  const {
+    data: Jobs,
+    isLoading,
+    isRefetching,
+  } = useQuery<Job[]>(
     ["jobs", query],
     async () => {
       return getSeachJobs(query);
@@ -47,7 +50,7 @@ const Jobs: React.FC<JobsProps> = () => {
   };
   let content;
   if (query.type === "all" || query.type === undefined) {
-    content = <BrowseJob Jobs={Jobs} isLoading={isLoading} />;
+    content = <BrowseJob Jobs={Jobs} isLoading={isLoading || isRefetching} />;
   }
   if (query.type === "saved") {
     content = <SaveJob />;

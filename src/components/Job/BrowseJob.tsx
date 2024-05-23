@@ -9,6 +9,8 @@ import { createSavedJobs, getSavedJobs, removeSavedJobs } from "@/app/apiQuery";
 import useSaved from "@/hooks/useSaved";
 import Loader from "../Utils/Loader";
 import Empty from "../Utils/Empty";
+import { useRouter } from "next/router";
+import { Button } from "@chakra-ui/react";
 
 type BrowseJobProps = {
   Jobs: Job[] | undefined;
@@ -17,11 +19,16 @@ type BrowseJobProps = {
 
 const BrowseJob: React.FC<BrowseJobProps> = ({ Jobs, isLoading }) => {
   const queryClient = useQueryClient();
+  const router = useRouter();
+  const { query } = router;
+  const params = new URLSearchParams(query as any);
+  const pathname = router.pathname;
   const { data: savedJobs } = useQuery("saved", getSavedJobs);
   const [jobOpen, setJobOpen] = useState(false);
   const [companyOpen, setCompanyOpen] = useState(false);
   const [companyId, setCompanyId] = useState("");
   const [jobId, setJobId] = useState("");
+
   const mutation = useMutation(createSavedJobs, {
     onSettled: () => {
       queryClient.invalidateQueries("saved");
@@ -35,6 +42,9 @@ const BrowseJob: React.FC<BrowseJobProps> = ({ Jobs, isLoading }) => {
     setJobOpen(false);
   };
   const handleJobModel = (cid: string, jid: string) => {
+    query["id"] = jid;
+    router.replace({ pathname, query });
+
     setJobId(jid);
     setCompanyId(cid);
     setCompanyOpen(false);
@@ -49,6 +59,10 @@ const BrowseJob: React.FC<BrowseJobProps> = ({ Jobs, isLoading }) => {
     setCompanyOpen(false);
   };
   const handleJobClose = () => {
+    params.delete("id");
+    router.replace({ pathname, query: params.toString() }, undefined, {
+      shallow: true,
+    });
     setCompanyId("");
     setJobId("");
     queryClient.removeQueries("getCompany");
@@ -56,6 +70,21 @@ const BrowseJob: React.FC<BrowseJobProps> = ({ Jobs, isLoading }) => {
     setJobOpen(false);
   };
 
+  const handlePagination = (type: "next" | "prev") => {
+    const currentPage = Number(params.get("page")) ?? 1;
+    if (type === "next") {
+      query["page"] = String(currentPage + 1);
+      router.replace({ pathname, query });
+    }
+    if (type === "prev") {
+      if (currentPage == 1) {
+        return;
+      } else {
+        query["page"] = String(currentPage - 1);
+        router.replace({ pathname, query });
+      }
+    }
+  };
   let content;
 
   if (isLoading) {
@@ -106,14 +135,26 @@ const BrowseJob: React.FC<BrowseJobProps> = ({ Jobs, isLoading }) => {
       />
       <JobModal
         handleClose={handleJobClose}
-        jobId={jobId}
-        open={jobOpen}
+        jobId={jobId || (params.get("id") as string)}
+        open={jobOpen || !!params.get("id")}
         companyId={companyId}
       />
       <div className=" sticky top-6 ">
         <SearchFilter />
       </div>
       {content}
+
+      <div className="flex justify-center gap-5 mt-10">
+        <Button onClick={() => handlePagination("prev")} disabled={isLoading}>
+          Prev
+        </Button>
+        <Button
+          onClick={() => handlePagination("next")}
+          disabled={isLoading || !Jobs || Jobs?.length < 1}
+        >
+          Next
+        </Button>
+      </div>
     </div>
   );
 };

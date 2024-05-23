@@ -79,8 +79,6 @@ const JobModal: React.FC<JobModalProps> = ({
     },
   });
 
-  console.log("user application", userApplication);
-
   const alreadyApplied = !!userApplication?.find(
     (application: any) => application.JId === jobId
   );

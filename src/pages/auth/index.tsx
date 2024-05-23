@@ -2,11 +2,10 @@ import React, { useRef, useState } from "react";
 import { Button, Divider } from "@chakra-ui/react";
 import Login from "@/components/Auth/Login";
 import Signup from "@/components/Auth/Signup";
-import { User } from "@/type/types";
+import { Profile, User } from "@/type/types";
 import { toast, Toaster } from "react-hot-toast";
 import * as yup from "yup";
 import { Formik } from "formik";
-import { GoogleLogin } from "@react-oauth/google";
 import { setCredential } from "@/feature/auth/authSlice";
 import {
   useLoginMutation,
@@ -16,6 +15,8 @@ import { useAppDispatch } from "@/app/hooks";
 import { useRouter } from "next/router";
 import useProfile from "@/hooks/useProfile";
 import Logo from "@/components/Utils/Logo";
+import { getProfile } from "@/app/apiQuery";
+import { useQuery } from "react-query";
 
 const signupScheme = yup.object().shape({
   Email: yup
@@ -54,6 +55,7 @@ const Auth: React.FC = () => {
   const isSignup = authOption === "signup";
   const { email } = useProfile();
   const dispatch = useAppDispatch();
+  const { refetch } = useQuery<Profile>("profile", getProfile);
 
   const handleLogin = async (values: User, formProps: any) => {
     try {
@@ -63,6 +65,7 @@ const Auth: React.FC = () => {
           profile: { token: data.token, account: values.AccountType },
         })
       );
+      refetch();
       router.push("/");
     } catch (error: any) {
       toast.error(error?.data?.msg);
