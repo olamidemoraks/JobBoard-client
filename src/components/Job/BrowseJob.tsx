@@ -89,7 +89,7 @@ const BrowseJob: React.FC<BrowseJobProps> = ({ Jobs, isLoading }) => {
 
   if (isLoading) {
     content = (
-      <div className="flex items-center justify-center mt-3">
+      <div className="flex items-center justify-center mt-3 h-[50vh]">
         <Loader />
       </div>
     );
@@ -98,7 +98,6 @@ const BrowseJob: React.FC<BrowseJobProps> = ({ Jobs, isLoading }) => {
   if (!isLoading || Jobs) {
     content = (
       <div>
-        <div></div>
         <div className="flex flex-col gap-5">
           {Jobs?.map((job: any) => {
             const { isSaved, handleSaveOrUnsaveJob } = useSaved({

@@ -55,16 +55,22 @@ const Jobs: React.FC<JobsProps> = () => {
   if (query.type === "saved") {
     content = <SaveJob />;
   }
-  if (query.type === "hidden") {
-    content = <Hidden />;
-  }
+  // if (query.type === "hidden") {
+  //   content = <Hidden />;
+  // }
 
   return (
     <>
       <PageLayout>
         <div className="flex max-w-[1000px] w-[96%] flex-col ">
-          <h1 className=" text-3xl font-black">Search for jobs</h1>
-          <div className="flex gap-6 mt-4">
+          <p className=" text-center my-5  ">
+            <span className="text-2xl">Let's find you a</span>{" "}
+            <br className="sm:hidden  block" />
+            <span className="text-2xl uppercase  px-2 sm:mt-0 mt-4 rounded bg-gradient-to-l from-[#FFF2D7] via-[#FFF2D7] to-[#FFF2D7] ">
+              job
+            </span>
+          </p>
+          <div className="flex gap-6 mt-4 sm:justify-start justify-center ">
             <p
               className={` cursor-pointer ${
                 query.type === "all" || query.type === undefined
@@ -94,16 +100,16 @@ const Jobs: React.FC<JobsProps> = () => {
                 {savedJobs?.length}
               </p>
             </div>
-            <p
+            {/* <p
               className={` cursor-pointer ${
                 query.type === "hidden" || "" ? "border-b-[2px]" : "bottom-0"
               } pb-1 border-b-gray-600`}
               onClick={() => handleView("hidden")}
             >
               Hidden
-            </p>
+            </p> */}
           </div>
-          <div className="mt-4">{content}</div>
+          <div className="mt-4 min-h-[40vh]">{content}</div>
         </div>
       </PageLayout>
     </>
