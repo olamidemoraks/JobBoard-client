@@ -70,9 +70,16 @@ const Menu: React.FC<MenuProps> = ({ user }) => {
         _hover={{ bg: "transparent" }}
         _active={{ bg: "transparent" }}
       >
-        <div className="w-[2.4rem] h-[2.4rem] text-lg rounded-xl uppercase border-2 border-emerald-600 bg-emerald-600  text-white flex items-center justify-center">
-          {data?.FName?.[0]}
-        </div>
+        {user ? (
+          <div className="w-[2.4rem] h-[2.4rem] text-lg rounded-xl uppercase border-2 border-emerald-600 bg-emerald-600  text-white flex items-center justify-center">
+            {data?.FName?.[0]}
+          </div>
+        ) : (
+          <HiMenuAlt2
+            className={`${location === "/" ? "fill-white" : "fill-black"}`}
+            size={23}
+          />
+        )}
       </MenuButton>
       <MenuList shadow="md" bg={"white"} minWidth="350px" p={"6px"} zIndex={20}>
         {user && (
@@ -120,7 +127,6 @@ const Menu: React.FC<MenuProps> = ({ user }) => {
                 p="11px 15px"
               >
                 <p className=" font-bold bg-transparent">Profile</p>
-                <Icon as={AiOutlineRight} bg="transparent" />
               </Flex>
             </Link>
           </MenuItem>
@@ -141,7 +147,6 @@ const Menu: React.FC<MenuProps> = ({ user }) => {
                 p="11px 15px"
               >
                 <p className=" font-bold bg-transparent">Sign up / Login </p>
-                <Icon as={AiOutlineRight} bg="transparent" />
               </Flex>
             </Link>
           </MenuItem>
@@ -152,16 +157,17 @@ const Menu: React.FC<MenuProps> = ({ user }) => {
           borderRadius={6}
           color="gray.600"
         >
-          <Flex
-            align={"center"}
-            justify="space-between"
-            w="100%"
-            _hover={{ bg: "gray.200" }}
-            p="11px 15px"
-          >
-            <p className=" font-bold bg-transparent">Find Job</p>
-            <Icon as={AiOutlineRight} bg="transparent" />
-          </Flex>
+          <Link href="/jobs">
+            <Flex
+              align={"center"}
+              justify="space-between"
+              w="100%"
+              _hover={{ bg: "gray.200" }}
+              p="11px 15px"
+            >
+              <p className=" font-bold bg-transparent">Find Job</p>
+            </Flex>
+          </Link>
         </MenuItem>
 
         <MenuItem
@@ -172,16 +178,17 @@ const Menu: React.FC<MenuProps> = ({ user }) => {
           //   borderBottom="2px"
           //   borderColor="gray.200"
         >
-          <Flex
-            align={"center"}
-            justify="space-between"
-            w="100%"
-            _hover={{ bg: "gray.200" }}
-            p="11px 15px"
-          >
-            <p className=" font-bold bg-transparent"> Create your CV </p>
-            <Icon as={AiOutlineRight} bg="transparent" />
-          </Flex>
+          <Link href={user ? "/profile" : "/auth"}>
+            <Flex
+              align={"center"}
+              justify="space-between"
+              w="100%"
+              _hover={{ bg: "gray.200" }}
+              p="11px 15px"
+            >
+              <p className=" font-bold bg-transparent"> Create your CV </p>
+            </Flex>
+          </Link>
         </MenuItem>
         <MenuItem
           bg={"white"}
@@ -189,7 +196,7 @@ const Menu: React.FC<MenuProps> = ({ user }) => {
           borderRadius={6}
           color="gray.600"
         >
-          <Link href="/employee" className="w-full">
+          <Link href={user ? "/employee" : "/auth"} className="w-full">
             <Flex
               align={"center"}
               justify="space-between"
@@ -201,7 +208,6 @@ const Menu: React.FC<MenuProps> = ({ user }) => {
                 {" "}
                 Continue as Employer{" "}
               </p>
-              <Icon as={AiOutlineRight} bg="transparent" />
             </Flex>
           </Link>
         </MenuItem>

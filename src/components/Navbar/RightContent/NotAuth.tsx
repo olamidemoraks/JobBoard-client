@@ -16,14 +16,9 @@ const NotAuth: React.FC<NotAuthProps> = ({ user }) => {
         href="/auth"
         className="px-3 pb-[5px] ml-2 pt-[6px] text-white  bg-mid-green  rounded-lg  min-w-[90px] text-center md:block hidden"
       >
-        Sign in
+        Get Started
       </Link>
-      <Link
-        href="/auth"
-        className="px-3 ml-2 pb-[5px] pt-[6px] text-white  bg-dark-green  rounded-lg border-[3px] border-light-green/40 min-w-[90px] text-center md:block hidden"
-      >
-        Sign up
-      </Link>
+
       <Flex display={{ base: "flex", md: "none" }} align={"center"}>
         <Menu user={user} />
       </Flex>
